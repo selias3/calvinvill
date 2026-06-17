@@ -147,73 +147,36 @@ html {
 
 /* team table */
 
-.teamtable { 
-border: 1px;
-margin-right: 20px;
+.wikitable {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: #fff;
+    color: #202122;
 }
 
-.teamtable h1 { 
-background-color: #FF474C;
+.wikitable th,
+.wikitable td {
+    border: 1px solid #a2a9b1;
+    padding: 6px 10px;
+    text-align: left;
 }
 
-.teamtable h2 { 
-background-color: #6495ED;
+.wikitable th {
+    background-color: #eaecf0;
+    font-weight: bold;
 }
 
-	.table-container {
-      margin: auto;
-      background: white;
-      padding: 20px;
-    }
+.wikitable tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
 
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    .controls {
-      margin-bottom: 15px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    input, select {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead {
-      background: #6495ED;
-      color: white;
-    }
-
-    th, td {
-      padding: 12px 15px;
-      border-bottom: 0px solid #ddd;
-      text-align: left;
-    }
-
-    th {
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-    }
-
-    .sort-indicator {
-      margin-left: 6px;
-      font-size: 12px;
-    }
-
-    .hidden {
-      display: none;
-    }
+.wikitable caption {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+}
 </style>
 
 <!-- TOC -->
@@ -251,6 +214,36 @@ background-color: #6495ED;
 		</tr>
 	</table>
 
+	<table class="wikitable">
+    <tr>
+        <th colspan="5" style="background:#d8e2f1;">Eastern Conference</th>
+    </tr>
+    <tr>
+        <th>Team</th>
+        <th>Division</th>
+        <th>Location</th>
+        <th>Arena</th>
+        <th>Founded</th>
+    </tr>
+    <tr>
+        <td>Boston Celtics</td>
+        <td>Atlantic</td>
+        <td>Boston, Massachusetts</td>
+        <td>TD Garden</td>
+        <td>1946</td>
+    </tr>
+
+    <tr>
+        <th colspan="5" style="background:#f1d8d8;">Western Conference</th>
+    </tr>
+    <tr>
+        <td>Los Angeles Lakers</td>
+        <td>Pacific</td>
+        <td>Los Angeles, California</td>
+        <td>Crypto.com Arena</td>
+        <td>1947</td>
+    </tr>
+	</table>
 
 
 
