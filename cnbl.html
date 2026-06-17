@@ -1,241 +1,238 @@
+<<!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <title>Calvinvill National Basketball League (CNBL)</title>
 
 <style>
-/* Page spacing */
-body {
-  margin: 30px;
-  font-family: Arial, sans-serif;
-} 
-
-/* Smooth scrolling */
+/* General */
 html {
-  scroll-behavior: smooth;
-} 
-</style>
-</head>
+    scroll-behavior: smooth;
+}
 
-<!-- Header -->
+body {
+    margin: 30px;
+    font-family: Arial, sans-serif;
+}
 
-<h1 style="text-align:center;">
-  <a href="index.html">
-    <img src="images/emblem2.png" height="125" width="125" alt="Emblem">
-  </a>
-</h1>
-<h2 style="font-family:Georgia; background-color:#D1C4E9;">Calvinvill National Basketball League (CNBL)</h2>
-<body>
-<style>
+/* Header */
+.site-title {
+    font-family: Georgia, serif;
+    background-color: #D1C4E9;
+    padding: 8px;
+}
 
-/* Page spacing */
+.logo {
+    text-align: center;
+}
 
-.main { 
-	margin-bottom: 10px;
-	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-} 
+/* Content */
+.main {
+    margin: 10px;
+}
 
-.main p { 
-	margin: 10px;
-} 
+.main p {
+    margin: 10px;
+}
 
-.subheader { 
-	font-size: 12px;
-	font-style: italic;
-	margin-left: 30px;
-} 
+.subheader {
+    font-size: 12px;
+    font-style: italic;
+    margin-left: 30px;
+}
 
-/* Infobox */
+/* Infobox / TOC */
 .toc {
-  width: 300px;
-  float: right;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 20px;
-  border: 1px solid #ccc;
-  background: #ffffff;
-  padding: 10px;
-  box-sizing: border-box;
+    width: 300px;
+    float: right;
+    margin: 10px 20px 10px 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .toc h1 {
-  background-color: #eee;
-  text-align: center;
-  font-size: 14px;
-  padding: 10px;
-} 
-
-.subcatergories { 
-	padding: 20px;
-	font-size: 12px;
+    background-color: #eee;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
 }
-  
-/* Figure styling */
-.history-figure { 
-  margin: 10px 0;
+
+.subcategories {
+    padding: 20px;
+    font-size: 12px;
+    width: 100%;
+}
+
+/* Figures */
+.history-figure {
+    margin: 10px 0;
 }
 
 .history-figure img {
-  display: block;
-  max-width: 100%;
-	margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .history-figure figcaption {
-  font-size: 12px;
-  text-align: center;
-  margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
 }
 
+.history-figure-text {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin: 10px;
+    float: left;
+}
 
+.history-figure-text img {
+    display: block;
+    max-width: 100%;
+}
 
-/* in text images*/ 
-.history-figure-text { 
-	background-color: #ffffff;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-	margin: 10px;
-} 
+.history-figure-text figcaption {
+    font-size: 12px;
+    font-style: italic;
+    padding: 5px;
+}
 
-.history-figure-text img { 
-	display: block;
-	max-width: 100%;
-} 
-
-.history-figure-text figcaption { 
-	font-size: 12px;
-	font-family: Arial;
-	font-style: italic;
-	padding: 5px;
-} 
-	
-	
-
-/* Accordion section */
+/* Accordion */
 .section {
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
 }
 
 .header {
-  background: #eee;
-  padding: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 12px;
+    background: #eee;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  padding-left: 5px;
-  font-size: 12px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 5px;
+    font-size: 12px;
 }
 
 .content ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 5px 0;
+    list-style-type: none;
+    padding-left: 0;
+    margin: 5px 0;
 }
-
-
-/* lists */
-
-il { 
-	padding-left: 3px;
-} 
-
 </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="logo">
+    <a href="index.html">
+        <img src="images/emblem2.png" width="125" height="125" alt="Emblem">
+    </a>
+</div>
+
+<h2 class="site-title">Calvinvill National Basketball League (CNBL)</h2>
 
 <!-- TOC -->
 <div class="main">
-	<div class="toc">
-	  <h1>Calvinvill National Basketball League</h1>
-	  <div class="history-figure">
-		<img src="images/cnbl logo.png" align="center" alt="History image" width="200" height="200">
-		<figcaption>Caption goes here</figcaption>
-	</div>
-</hr>
-	<table class="subcatergories">
-		<tr>
-			<td><b>Sport</b></td>
-			<td><a href="sport.html">Basketball</a></td>
-		</tr>
-	</table>
+    <div class="toc">
 
+        <h1>Calvinvill National Basketball League</h1>
 
+        <figure class="history-figure">
+            <img src="images/cnbl logo.png" width="200" height="200" alt="CNBL Logo">
+            <figcaption>Caption goes here</figcaption>
+        </figure>
 
+        <hr>
 
-	  
+        <table class="subcategories">
+            <tr>
+                <td><strong>Sport</strong></td>
+                <td><a href="sport.html">Basketball</a></td>
+            </tr>
+        </table>
 
-	  <div class="section">
-		<div class="header" onclick="toggle(this)">Contents [show]</div>
-		<div class="content">
-		  <ol>
-			 <li><a href="#anchor1">Early History and Berber Period</a></li>
-			<li><a href="#anchor2">Middle Age European Encounters</a></li>
-			<li><a href="#anchor3">Early Modern XXX</a></li>
-			<li><a href="#anchor4">The Long 19th Century</a></li>
-			<li><a href="#anchor5">World War I, the inter-war period, and World War II</a></li>
-			<li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
-		  </ol>
-		</div>
-	  </div>
-	</div>
+        <div class="section">
+            <div class="header" onclick="toggle(this)">
+                Contents [show]
+            </div>
+
+            <div class="content">
+                <ol>
+                    <li><a href="#anchor1">Early History and Berber Period</a></li>
+                    <li><a href="#anchor2">Middle Age European Encounters</a></li>
+                    <li><a href="#anchor3">Early Modern XXX</a></li>
+                    <li><a href="#anchor4">The Long 19th Century</a></li>
+                    <li><a href="#anchor5">World War I, the Inter-war Period, and World War II</a></li>
+                    <li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-	<script>
-	 function toggle(header) {
-  const content = header.nextElementSibling;
+<!-- Accordion Script -->
+<script>
+function toggle(header) {
+    const content = header.nextElementSibling;
 
-  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-    // Currently open → close it
-    content.style.maxHeight = "0px";
-    header.textContent = header.textContent.replace("[hide]", "[show]");
-  } else {
-    // Currently closed → open it
-    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
-    header.textContent = header.textContent.replace("[show]", "[hide]");
-  }
-} 
-	</script>
+    if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+        content.style.maxHeight = "0px";
+        header.textContent = header.textContent.replace("[hide]", "[show]");
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        header.textContent = header.textContent.replace("[show]", "[hide]");
+    }
+}
+</script>
 
+<!-- Intro -->
 <div class="main">
-	<p> The Calvinvill National Basketball League (CNBL) is a professional basketball league in Calvinvill and Khouza consisting of ten teams
-		split into two divisions, the A division and Z division respectively. The type of basketball played is unique to the Kouz Island chain
-		as each team has three players on the court and games being confined to a point total of 30. Many of the players are homegrown, often being 
-		drafted from various universities after playing <a href="collegebb.html">Calvinvill College Basketball.</a>
-	</p>
-
+    <p>
+        The Calvinvill National Basketball League (CNBL) is a professional basketball league in Calvinvill and Khouza consisting of ten teams split into two divisions, the A Division and Z Division respectively. The type of basketball played is unique to the Kouz Island chain, as each team has three players on the court and games are confined to a point total of 30. Many of the players are homegrown, often being drafted from various universities after playing <a href="collegebb.html">Calvinvill College Basketball</a>.
+    </p>
 </div>
 
+<!-- Gameplay and Format -->
 <div class="main">
-	<h1 id="anchor1" colspan="1" style="font-size: 18px; text-align:left; background-color:#EEEEEE">Gameplay and format</h1>
-	<p> The island now known as <a href="CalvinvillIsland.html">Calvinvill</a> was first inhabited
-		by Berber or Amazigh peoples. The Berbers, indigenous to North Africa, particularly modern-day Morocco, Algeria, and Libya, 
-		originally spread Westward from the Nile. Around 703 CE (5037 KC), as the Umayyad Caliphate and Islam moved Westward, small groups 
-		of Berbers fled into the Mediterranean Sea and discovered the Kouz Islands chain. 
-		</br>
-	<div class="history-figure-text" style="float:left">
-		<img src="images/berberflag.png" width="180" height="120" Caption="Amazigh flag">
-			<figcaption><small> Flag of the Amazigh People</small></figcaption>		
-	</div>	
-		</br>
-		Population centers were on the two main islands, Calvinvill, then called Tasrifa, and Khouza. The settlements, 
-		initially composed of hundreds of people, were a refuge from Umayyad rule, other Berbers, and conversion to Islam. The Berbers of Kouz maintained their <a href="https://en.wikipedia.org/wiki/Traditional_Berber_religion"> traditional cultural and religious practices</a> 
-		partially a result of the relative geographic isolation of the islands.
-		</br>
-		</br>
-		In the following centuries, these intial settlements expanded and a clear distinction developed between the Berbers 
-		of the Tasrifan Hinterlands, the Tasrifan Coast, and the surrounding Islands. Secluded by the surrounded mountain ranges, the Berbers of the Hinterlands 	
-		were the most sedentary. Since the Hinterland Berbers lived in the most fertile land, they raised producive agricultural fields and livestock such as sheep and goats. 
-		The clans of the Hinterland grew more intertwined and centralized. Whereas, the Berbers of the Tasrifan Coast and Kouz Islands, did not have access to such fertile lands. 
-		The livelihood of these clans were dependent on fishing and trade with the low Hinterlands, creating an inherent power imbalance between the Hinterlands, Coastal, and Island clans.
-		</br>
-	</p>
+
+    <h1 id="anchor1" style="font-size:18px; background-color:#EEEEEE;">
+        Gameplay and Format
+    </h1>
+
+    <p>
+        The island now known as <a href="CalvinvillIsland.html">Calvinvill</a> was first inhabited by Berber or Amazigh peoples. The Berbers, indigenous to North Africa, particularly modern-day Morocco, Algeria, and Libya, originally spread westward from the Nile. Around 703 CE (5037 KC), as the Umayyad Caliphate and Islam moved westward, small groups of Berbers fled into the Mediterranean Sea and discovered the Kouz Islands chain.
+    </p>
+
+    <figure class="history-figure-text">
+        <img src="images/berberflag.png" width="180" height="120" alt="Amazigh Flag">
+        <figcaption>Flag of the Amazigh People</figcaption>
+    </figure>
+
+    <p>
+        Population centers were on the two main islands, Calvinvill, then called Tasrifa, and Khouza. The settlements, initially composed of hundreds of people, were a refuge from Umayyad rule, other Berbers, and conversion to Islam. The Berbers of Kouz maintained their traditional cultural and religious practices partially as a result of the relative geographic isolation of the islands.
+    </p>
+
+    <p>
+        In the following centuries, these initial settlements expanded and a clear distinction developed between the Berbers of the Tasrifan Hinterlands, the Tasrifan Coast, and the surrounding islands. Secluded by the surrounding mountain ranges, the Berbers of the Hinterlands were the most sedentary. Since they lived in the most fertile land, they developed productive agricultural fields and raised livestock such as sheep and goats.
+    </p>
+
+    <p>
+        The clans of the Hinterlands grew more intertwined and centralized. In contrast, the Berbers of the Tasrifan Coast and Kouz Islands did not have access to such fertile lands. Their livelihoods depended on fishing and trade with the Hinterlands, creating an inherent power imbalance between the Hinterland, Coastal, and Island clans.
+    </p>
+
 </div>
+
+</body>
+</html>
