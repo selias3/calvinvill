@@ -1,0 +1,210 @@
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Kouz Islands History</title>
+
+<style>
+/* Page spacing */
+body {
+  margin: 30px;
+  font-family: Arial, sans-serif;
+} 
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+} 
+</style>
+</head>
+
+<!-- Header -->
+
+<h1 style="text-align:center;">
+  <a href="homepage.html">
+    <img src="images/emblem2.png" height="125" width="125" alt="Emblem">
+  </a>
+</h1>
+<h2 style="font-family:Georgia; background-color:#D1C4E9;"> History of the Kouz Islands</h2>
+
+
+
+<body>
+<style>
+/* Page spacing */
+
+.main { 
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+} 
+
+.main p { 
+	margin: 10px;
+} 
+
+.subheader { 
+	font-size: 12px;
+	font-style: italic;
+	margin-left: 30px;
+} 
+
+/* Infobox */
+.toc {
+  width: 300px;
+  float: right;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.toc h1 {
+  background-color: #eee;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+} 
+  
+  
+/* Figure styling */
+.history-figure { 
+  margin: 10px 0;
+}
+
+.history-figure img {
+  display: block;
+  max-width: 100%;
+	margin: 0 auto;
+}
+
+.history-figure figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+
+/* in text images*/ 
+.history-figure-text { 
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	margin: 10px;
+} 
+
+.history-figure-text img { 
+	display: block;
+	max-width: 100%;
+} 
+
+.history-figure-text figcaption { 
+	font-size: 12px;
+	font-family: Arial;
+	font-style: italic;
+	padding: 5px;
+} 
+	
+	
+
+/* Accordion section */
+.section {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.header {
+  background: #eee;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+.content ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 5px 0;
+}
+
+
+
+/* lists */
+
+il { 
+	padding-left: 3px;
+} 
+
+</style>
+
+<!-- TOC -->
+<div class="main">
+	<div class="toc">
+	  <h1>History of the Kouz Islands</h1>
+	  <div class="history-figure">
+		<img src="images/history.jpg" align="center" alt="History image" width="200" height="200">
+		<figcaption>Caption goes here</figcaption>
+	  </div>
+
+	  <div class="section">
+		<div class="header" onclick="toggle(this)">Contents [show]</div>
+		<div class="content">
+		  <ol>
+			 <li><a href="#anchor1">Early History and Berber Period</a></li>
+			<li><a href="#anchor2">Middle Age European Encounters</a></li>
+			<li><a href="#anchor3">Early Modern XXX</a></li>
+			<li><a href="#anchor4">The Long 19th Century</a></li>
+			<li><a href="#anchor5">World War I, the inter-war period, and World War II</a></li>
+			<li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
+		  </ol>
+		</div>
+	  </div>
+	</div>
+</div>
+
+	<script>
+	 function toggle(header) {
+  const content = header.nextElementSibling;
+
+  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+    // Currently open → close it
+    content.style.maxHeight = "0px";
+    header.textContent = header.textContent.replace("[hide]", "[show]");
+  } else {
+    // Currently closed → open it
+    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
+    header.textContent = header.textContent.replace("[show]", "[hide]");
+  }
+} 
+	</script>
+
+<div class="main">
+	<p> The history of the Kouz Islands and often is representative of broader regional and global historical contexts of the Mediterranean region, North Africa, and Southern Europe. 
+		Geographically, the Kouz islands are primary composed of modern-day nations of <a href="calvinvill.html"> Calvinvill </a> and <a href="khouza.html"> Khouza</a> and a plurality of smaller islands, some of which are disputed  
+		by both nations. Written proof of inhabitance of the islands stretches back to approximately 703 CE (5037 <i><a href="khouzancalendar.html"> Khouzan Calendar (KC)</a></i>), where groups of Berbers from the Mahgreb fled
+		Islam and the Umayyad Caliphate. Many people who currently inhabit the region can trace varrying degrees of their lineage back to these migrant Berbers. Through various encounters 
+		with regional powers throughout the 11th century, the Islands began to become integrated into the regional economy. 
+		
+		
+		. From the 15th century onwards, Portuguese traders had sustained contact with the Berbers of the Islands. 
+		As the industrial revolution swept the world, capital owners began to reshape and mature the regions economy. World War I and II reorientated the regions involvement with Europe, emerging from previous isolationist policy. 
+		This had profound effects on the culture, demographics, religion, and politics of the Kouz Islands, helping shape the dynamics we know today.
+	</p>
+	
+/* with the consolidation of agricultural production and the introduction of factory production of paper, textiles, and iron. */
+
+</div>
