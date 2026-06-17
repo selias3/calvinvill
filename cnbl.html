@@ -213,42 +213,6 @@ html {
 			<td><a href="water.html">Oceanview Water</a> (3 tites)</td>
 		</tr>
 	</table>
-
-	<table class="wikitable">
-    <tr>
-        <th colspan="5" style="background:#d8e2f1;">Eastern Conference</th>
-    </tr>
-    <tr>
-        <th>Team</th>
-        <th>Division</th>
-        <th>Location</th>
-        <th>Arena</th>
-        <th>Founded</th>
-    </tr>
-    <tr>
-        <td>Boston Celtics</td>
-        <td>Atlantic</td>
-        <td>Boston, Massachusetts</td>
-        <td>TD Garden</td>
-        <td>1946</td>
-    </tr>
-
-    <tr>
-        <th colspan="5" style="background:#f1d8d8;">Western Conference</th>
-    </tr>
-    <tr>
-        <td>Los Angeles Lakers</td>
-        <td>Pacific</td>
-        <td>Los Angeles, California</td>
-        <td>Crypto.com Arena</td>
-        <td>1947</td>
-    </tr>
-	</table>
-
-
-
-	  
-
 	  <div class="section">
 		<div class="header" onclick="toggle(this)">Contents [show]</div>
 		<div class="content">
@@ -263,8 +227,7 @@ html {
 	  </div>
 	</div>
 </div>
-
-	<script>
+<script>
 	 function toggle(header) {
   const content = header.nextElementSibling;
 
@@ -278,7 +241,7 @@ html {
     header.textContent = header.textContent.replace("[show]", "[hide]");
   }
 } 
-	</script>
+</script>
 
 <div class="main">
 	<p> The Calvinvill National Basketball League (CNBL) is a professional basketball league in Calvinvill and Khouza consisting of ten teams
@@ -314,120 +277,38 @@ html {
 		[Insert notebook page of teams]
 		[Insert map of teams]
 	</p>
+	<table class="wikitable">
+    <tr>
+        <th colspan="5" style="background:#d8e2f1;">Eastern Conference</th>
+    </tr>
+    <tr>
+        <th>Team</th>
+        <th>Division</th>
+        <th>Location</th>
+        <th>Arena</th>
+        <th>Founded</th>
+    </tr>
+    <tr>
+        <td>Boston Celtics</td>
+        <td>Atlantic</td>
+        <td>Boston, Massachusetts</td>
+        <td>TD Garden</td>
+        <td>1946</td>
+    </tr>
+
+    <tr>
+        <th colspan="5" style="background:#f1d8d8;">Western Conference</th>
+    </tr>
+    <tr>
+        <td>Los Angeles Lakers</td>
+        <td>Pacific</td>
+        <td>Los Angeles, California</td>
+        <td>Crypto.com Arena</td>
+        <td>1947</td>
+    </tr>
+	</table>
 </div>
-<div class="main">
-  	<div class="table-container">
-		<table id="employeeTable">
-		<thead>
-			<tr>
-			<th data-column="Team name">Team Name <span class="sort-indicator"></span></th>
-			<th data-column="Location">Location <span class="sort-indicator"></span></th>
-			<th data-column="Titles">Titles<span class="sort-indicator"></span></th>
-			<th data-column="Runners-up">Runners-up <span class="sort-indicator"></span></th>
-			<th data-column="Stadium">Stadium <span class="sort-indicator"></span></th>
-			</tr>
-		</thead>
 
-		<tbody>
-			<tr>
-				<td><a href="trees.html">Brunswick Trees</a></td>
-				<td><a href="brinkley.html">Brinkley</a>,<a href="brunswick.html">Brunswick Province</a>,CV</td>
-				<td>0</td>
-				<td>1</td>
-				<td>Bi-mart Center</td>
-			</tr>
-			<tr>
-			<td><a href="books/justes.html"><u>The Just Assassins (Les justes)</u></td>
-			<td>Camus, Albert</td>
-			<td>1949</td>
-			<td>play</td>
-			<td>N/A</td>
-			<td>ROMS</td>
-			</tr>
-			<tr>
-			<td><a href="books/justes.html"><u>Exile and the Kingdom (L'exil et le royaume)</u></td>
-			<td>Camus, Albert</td>
-			<td>1957</td>
-			<td>short story collection</td>
-			<td>N/A</td>
-			<td>ROMS</td>
-			</tr>
-			<tr>
-			<td><a href="books/brueghel.html"><u>Pictures from Brueghel</u></td>
-			<td>Williams, William Carlos</td>
-			<td>1962</td>
-			<td>play</td>
-			<td>N/A</td>
-			<td>Bookmans</td>
-			</tr>
-		</tbody>
-		</table>
-	</div>
-
-  <script>
-    const table = document.getElementById("employeeTable");
-    const tbody = table.querySelector("tbody");
-    const headers = table.querySelectorAll("th");
-
-    const searchInput = document.getElementById("searchInput");
-    const departmentFilter = document.getElementById("departmentFilter");
-
-    let sortDirection = {};
-
-    // SORTING
-    headers.forEach((header, index) => {
-      header.addEventListener("click", () => {
-        const rows = Array.from(tbody.querySelectorAll("tr"));
-        const isAscending = !sortDirection[index];
-
-        rows.sort((a, b) => {
-          let aText = a.children[index].textContent.trim();
-          let bText = b.children[index].textContent.trim();
-
-          // Detect numbers
-          const aNum = parseFloat(aText);
-          const bNum = parseFloat(bText);
-
-          if (!isNaN(aNum) && !isNaN(bNum)) {
-            return isAscending ? aNum - bNum : bNum - aNum;
-          }
-
-          return isAscending
-            ? aText.localeCompare(bText)
-            : bText.localeCompare(aText);
-        });
-
-        // Update table
-        tbody.innerHTML = "";
-        rows.forEach(row => tbody.appendChild(row));
-
-        // Reset indicators
-        headers.forEach(h => {
-          h.querySelector(".sort-indicator").textContent = "";
-        });
-
-        // Set current indicator
-        header.querySelector(".sort-indicator").textContent =
-          isAscending ? "▲" : "▼";
-
-        sortDirection[index] = isAscending;
-      });
-    });
-	</script>
-	</div> 
-
-
-
-
-
-
-
-
-
-
-
-
-	<table class="teamtable">
 		<tr>
 			<td><b>Team Name</b></td>
 			<td><b>Location</b></td>
