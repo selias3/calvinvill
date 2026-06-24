@@ -136,6 +136,26 @@ html {
   padding-left: 0;
   margin: 5px 0;
 }
+
+textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        #output {
+            margin-top: 20px;
+            background: #f4f4f4;
+            padding: 15px;
+            white-space: pre-wrap;
+            border-radius: 5px;
+            word-break: break-word;
+        }
 </style>
 <!-- TOC -->
 <div class="main">
@@ -176,6 +196,7 @@ html {
     header.textContent = header.textContent.replace("[show]", "[hide]");
   }
 } 
+
 </script> 
 
 <h1>English → Custom Alphabet</h1>
@@ -189,85 +210,49 @@ html {
 <script>
 
 const alphabet = {
-    A: "EH",
-    B: "BE",
-    C: "SI",
-    D: "DI",
-    E: "I",
-    F: "FH",
-    G: "JE",
-    H: "CH",
-    I: "HI",
-    J: "GA",
-    K: "KH",
-    L: "EL",
-    M: "MN",
-    N: "NH",
-    O: "OU",
-    P: "PE",
-    Q: "KU",
-    R: "AR",
-    S: "TS",
-    T: "TI",
-    U: "OI",
-    V: "E",
-    W: "VU",
-    X: "LC",
-    Y: "IE",
-    Z: "ZA"
+    A: "EH", B: "BE", C: "SI", D: "DI", E: "I",
+    F: "FH", G: "JE", H: "CH", I: "HI", J: "GA",
+    K: "KH", L: "EL", M: "MN", N: "NH", O: "OU",
+    P: "PE", Q: "KU", R: "AR", S: "TS", T: "TI",
+    U: "OI", V: "E", W: "VU", X: "LC", Y: "IE", Z: "ZA"
 };
 
 function translateText() {
 
     const text = document.getElementById("input").value.toUpperCase();
 
-    let result = "";
-    let i = 0;
+    let prevChar = null;
+    let prevChunk = null;
 
-    while (i < text.length) {
+    let output = "";
 
-        const current = text[i];
+    for (let c of text) {
 
-        if (current === " ") {
-            result += " ";
-            i++;
-            continue;
+        if (!alphabet[c]) continue;
+
+        let chunk = alphabet[c];
+
+        if (c === prevChar) {
+            output += "'";
+        }
+        else if (chunk === prevChunk) {
+            output += '"';
+        }
+        else {
+            output += chunk;
         }
 
-        let count = 1;
-
-        while (i + count < text.length && text[i + count] === current) {
-            count++;
-        }
-
-        if (alphabet[current]) {
-
-            result += alphabet[current];
-
-            let extras = count - 1;
-
-            while (extras >= 2) {
-                result += '"';
-                extras -= 2;
-            }
-
-            while (extras >= 1) {
-                result += "'";
-                extras -= 1;
-            }
-
-        } else {
-            result += current;
-        }
-
-        i += count;
+        prevChar = c;
+        prevChunk = chunk;
     }
 
-    document.getElementById("output").textContent = result;
+    document.getElementById("output").textContent = output;
 }
 
 </script>
 
+</body>
+</html>
 
 </body>
 
