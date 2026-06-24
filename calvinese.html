@@ -218,7 +218,6 @@ const alphabet = {
 };
 
 function translateText() {
-
     const text = document.getElementById("input").value;
 
     let output = "";
@@ -226,63 +225,50 @@ function translateText() {
 
     while (i < text.length) {
 
-        let c = text[i];
-
-        if (!alphabet[c.toUpperCase()]) {
+        // =========================
+        // SPACE HANDLING (NEW)
+        // =========================
+        if (text[i] === " ") {
+            output += " ";
             i++;
             continue;
         }
 
-        let chunk = alphabet[c.toUpperCase()];
+        let c = text[i];
+        let key = c.toUpperCase();
 
-        // preserve case in output
+        if (!alphabet[key]) {
+            i++;
+            continue;
+        }
+
+        // 1. Count identical consecutive letters
+        let count = 1;
+        while (
+            i + count < text.length &&
+            text[i + count] === c
+        ) {
+            count++;
+        }
+
+        let chunk = alphabet[key];
+
+        // preserve case
         if (c === c.toLowerCase()) {
             chunk = chunk.toLowerCase();
         }
 
-        // =========================
-        // LETTER repetition rule (')
-        // case-sensitive comparison
-        // =========================
-        let letterCount = 1;
-
-        while (
-            i + letterCount < text.length &&
-            text[i + letterCount] === c
-        ) {
-            letterCount++;
-        }
-
-        if (letterCount > 1) {
-            output += chunk + "'";
-            i += letterCount;
-            continue;
-        }
-
-        // =========================
-        // CHUNK repetition rule (")
-        // case-sensitive chunk compare
-        // =========================
-        let chunkCount = 1;
-
-        while (
-            i + chunkCount < text.length &&
-            alphabet[text[i + chunkCount].toUpperCase()] === alphabet[c.toUpperCase()] &&
-            text[i + chunkCount] === text[i]
-        ) {
-            chunkCount++;
-        }
-
         output += chunk;
 
-        if (chunkCount === 2) output += "'";
-        else if (chunkCount === 3) output += '"';
-        else if (chunkCount > 3) {
-            output += '"'.repeat(Math.floor(chunkCount / 2));
-            if (chunkCount % 2 === 1) output += "'";
+        // repetition markers
+        if (count === 2) output += "'";
+        else if (count === 3) output += '"';
+        else if (count > 3) {
+            output += '"'.repeat(Math.floor(count / 2));
+            if (count % 2 === 1) output += "'";
         }
 
-        i += chunkCount;
+        i += count;
     }
 
     document.getElementById("output").textContent = output;
