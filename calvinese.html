@@ -178,97 +178,96 @@ html {
 } 
 </script> 
 
-<h2>Custom Secret Code Translator</h2>
+<h1>English → Custom Alphabet</h1>
 
 <textarea id="input" placeholder="Enter English text"></textarea>
 <br>
-<button onclick="translate()">Encode</button>
+<button onclick="translateText()">Translate</button>
 
 <div id="output"></div>
 
 <script>
-function translate() {
 
-    const codeMap = {
-        A: "EH",
-        B: "BE",
-        C: "SI",
-        D: "DI",
-        E: "I",
-        F: "FH",
-        G: "JE",
-        H: "CH",
-        I: "HI",
-        J: "GA",
-        K: "KH",
-        L: "EL",
-        M: "MN",
-        N: "NH",
-        O: "OU",
-        P: "PE",
-        Q: "KU",
-        R: "AR",
-        S: "TS",
-        T: "TI",
-        U: "OI",
-        V: "E",
-        W: "VU",
-        X: "LC",
-        Y: "IE",
-        Z: "ZA"
-    };
+const alphabet = {
+    A: "EH",
+    B: "BE",
+    C: "SI",
+    D: "DI",
+    E: "I",
+    F: "FH",
+    G: "JE",
+    H: "CH",
+    I: "HI",
+    J: "GA",
+    K: "KH",
+    L: "EL",
+    M: "MN",
+    N: "NH",
+    O: "OU",
+    P: "PE",
+    Q: "KU",
+    R: "AR",
+    S: "TS",
+    T: "TI",
+    U: "OI",
+    V: "E",
+    W: "VU",
+    X: "LC",
+    Y: "IE",
+    Z: "ZA"
+};
 
-    let text = document.getElementById("input").value.toUpperCase();
-    let result = "";
+function translateText() {
 
-    for (let char of text) {
-        if (codeMap[char]) {
-            result += codeMap[char] + " ";
-        } else if (char === " ") {
-            result += "/ ";
-        } else {
-            result += char + " ";
-        }
-    }
+    const text = document.getElementById("input").value.toUpperCase();
 
-    document.getElementById("output").textContent = result;
-}
-
-function encode(text) {
     let result = "";
     let i = 0;
 
     while (i < text.length) {
-        let current = text[i];
+
+        const current = text[i];
+
+        if (current === " ") {
+            result += " ";
+            i++;
+            continue;
+        }
+
         let count = 1;
 
-        while (
-            i + count < text.length &&
-            text[i + count] === current
-        ) {
+        while (i + count < text.length && text[i + count] === current) {
             count++;
         }
 
-        result += current;
+        if (alphabet[current]) {
 
-        let extras = count - 1;
+            result += alphabet[current];
 
-        while (extras >= 2) {
-            result += '"';
-            extras -= 2;
-        }
+            let extras = count - 1;
 
-        while (extras >= 1) {
-            result += "'";
-            extras -= 1;
+            while (extras >= 2) {
+                result += '"';
+                extras -= 2;
+            }
+
+            while (extras >= 1) {
+                result += "'";
+                extras -= 1;
+            }
+
+        } else {
+            result += current;
         }
 
         i += count;
     }
 
-    return result;
+    document.getElementById("output").textContent = result;
 }
+
 </script>
+
 
 </body>
 
