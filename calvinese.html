@@ -199,7 +199,7 @@ textarea {
 
 </script> 
 
-<h1>Custom Alphabet Translator (Case Sensitive)</h1>
+<h1>Custom Alphabet Translator</h1>
 
 <textarea id="input"></textarea>
 <br>
@@ -222,71 +222,52 @@ function translateText() {
     const text = document.getElementById("input").value;
 
     let output = "";
-    let i = 0;
 
-    while (i < text.length) {
+    let prevChar = null;
+    let prevChunk = null;
+
+    for (let i = 0; i < text.length; i++) {
 
         let c = text[i];
 
-        if (!alphabet[c.toUpperCase()]) {
-            i++;
-            continue;
-        }
+        if (!alphabet[c.toUpperCase()]) continue;
 
         let chunk = alphabet[c.toUpperCase()];
 
-        // preserve case in output
+        // preserve case (optional but consistent)
         if (c === c.toLowerCase()) {
             chunk = chunk.toLowerCase();
         }
 
         // =========================
-        // LETTER repetition rule (')
-        // case-sensitive comparison
+        // RULE 1: same LETTER repeat → '
         // =========================
-        let letterCount = 1;
-
-        while (
-            i + letterCount < text.length &&
-            text[i + letterCount] === c
-        ) {
-            letterCount++;
-        }
-
-        if (letterCount > 1) {
-            output += chunk + "'";
-            i += letterCount;
-            continue;
+        if (c === prevChar) {
+            output += "'";
         }
 
         // =========================
-        // CHUNK repetition rule (")
-        // case-sensitive chunk compare
+        // RULE 2: same CHUNK repeat → "
         // =========================
-        let chunkCount = 1;
-
-        while (
-            i + chunkCount < text.length &&
-            alphabet[text[i + chunkCount].toUpperCase()] === alphabet[c.toUpperCase()] &&
-            text[i + chunkCount] === text[i]
-        ) {
-            chunkCount++;
+        else if (chunk === prevChunk) {
+            output += '"';
         }
 
-        output += chunk;
-
-        if (chunkCount === 2) output += "'";
-        else if (chunkCount === 3) output += '"';
-        else if (chunkCount > 3) {
-            output += '"'.repeat(Math.floor(chunkCount / 2));
-            if (chunkCount % 2 === 1) output += "'";
+        else {
+            output += chunk;
         }
 
-        i += chunkCount;
+        prevChar = c;
+        prevChunk = chunk;
     }
 
     document.getElementById("output").textContent = output;
 }
+
+</script>
+
+</body>
+</html>
 
 </script>
 </body>
