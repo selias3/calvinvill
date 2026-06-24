@@ -199,116 +199,94 @@ textarea {
 
 </script> 
 
-<h1>Custom Alphabet Translator</h1>
+<h1>Custom Alphabet Translator (Case Sensitive)</h1>
 
 <textarea id="input"></textarea>
 <br>
-<button onclick="translate()">Translate</button>
+<button onclick="translateText()">Translate</button>
 
 <div id="output"></div>
 
 <script>
 
 const alphabet = {
-    A:"EH",B:"BE",C:"SI",D:"DI",E:"I",
-    F:"FH",G:"JE",H:"CH",I:"HI",J:"GA",
-    K:"KH",L:"EL",M:"MN",N:"NH",O:"OU",
-    P:"PE",Q:"KU",R:"AR",S:"TS",T:"TI",
-    U:"OI",V:"E",W:"VU",X:"LC",Y:"IE",Z:"ZA"
+    A: "EH", B: "BE", C: "SI", D: "DI", E: "I",
+    F: "FH", G: "JE", H: "CH", I: "HI", J: "GA",
+    K: "KH", L: "EL", M: "MN", N: "NH", O: "OU",
+    P: "PE", Q: "KU", R: "AR", S: "TS", T: "TI",
+    U: "OI", V: "E", W: "VU", X: "LC", Y: "IE", Z: "ZA"
 };
 
-function translate() {
+function translateText() {
 
-    const input = document.getElementById("input").value;
+    const text = document.getElementById("input").value;
 
-    // STEP 1: build tokens
-    let tokens = [];
-
-    for (let ch of input) {
-        if (ch === " ") {
-            tokens.push({ type: "space" });
-        } else {
-            let up = ch.toUpperCase();
-            if (alphabet[up]) {
-                tokens.push({
-                    type: "char",
-                    char: ch,
-                    chunk: alphabet[up]
-                });
-            }
-        }
-    }
-
-    // STEP 2: process groups
-    let out = "";
+    let output = "";
     let i = 0;
 
-    while (i < tokens.length) {
+    while (i < text.length) {
 
-        let t = tokens[i];
+        let c = text[i];
 
-        if (t.type === "space") {
-            out += "_";
+        if (!alphabet[c.toUpperCase()]) {
             i++;
             continue;
         }
 
-        let letterCount = 1;
-        let chunkCount = 1;
+        let chunk = alphabet[c.toUpperCase()];
 
-        // count letter repeats
+        // preserve case in output
+        if (c === c.toLowerCase()) {
+            chunk = chunk.toLowerCase();
+        }
+
+        // =========================
+        // LETTER repetition rule (')
+        // case-sensitive comparison
+        // =========================
+        let letterCount = 1;
+
         while (
-            i + letterCount < tokens.length &&
-            tokens[i + letterCount].type === "char" &&
-            tokens[i + letterCount].char === t.char
+            i + letterCount < text.length &&
+            text[i + letterCount] === c
         ) {
             letterCount++;
         }
 
-        // count chunk repeats
-        while (
-            i + chunkCount < tokens.length &&
-            tokens[i + chunkCount].type === "char" &&
-            tokens[i + chunkCount].chunk === t.chunk
-        ) {
-            chunkCount++;
-        }
-
-        // =========================
-        // RULE 1: letter repeat → '
-        // =========================
         if (letterCount > 1) {
-            out += t.chunk + "'";
+            output += chunk + "'";
             i += letterCount;
             continue;
         }
 
-        // emit chunk
-        out += t.chunk;
-
         // =========================
-        // RULE 2: chunk repeat → "
+        // CHUNK repetition rule (")
+        // case-sensitive chunk compare
         // =========================
-        let extras = chunkCount - 1;
+        let chunkCount = 1;
 
-        if (extras === 1) out += "'";
-        else if (extras === 2) out += '"';
-        else if (extras > 2) {
-            out += '"'.repeat(Math.floor(extras / 2));
-            if (extras % 2 === 1) out += "'";
+        while (
+            i + chunkCount < text.length &&
+            alphabet[text[i + chunkCount].toUpperCase()] === alphabet[c.toUpperCase()] &&
+            text[i + chunkCount] === text[i]
+        ) {
+            chunkCount++;
+        }
+
+        output += chunk;
+
+        if (chunkCount === 2) output += "'";
+        else if (chunkCount === 3) output += '"';
+        else if (chunkCount > 3) {
+            output += '"'.repeat(Math.floor(chunkCount / 2));
+            if (chunkCount % 2 === 1) output += "'";
         }
 
         i += chunkCount;
     }
 
-    document.getElementById("output").textContent = out;
+    document.getElementById("output").textContent = output;
 }
-
-</script>
-
-</body>
-</html>
-
 </script>
 </body>
 
