@@ -203,65 +203,105 @@ textarea {
 
 <textarea id="input"></textarea>
 <br>
-<button onclick="translateText()">Translate</button>
+<button onclick="translate()">Translate</button>
 
 <div id="output"></div>
 
 <script>
 
 const alphabet = {
-    A: "EH", B: "BE", C: "SI", D: "DI", E: "I",
-    F: "FH", G: "JE", H: "CH", I: "HI", J: "GA",
-    K: "KH", L: "EL", M: "MN", N: "NH", O: "OU",
-    P: "PE", Q: "KU", R: "AR", S: "TS", T: "TI",
-    U: "OI", V: "E", W: "VU", X: "LC", Y: "IE", Z: "ZA"
+    A:"EH",B:"BE",C:"SI",D:"DI",E:"I",
+    F:"FH",G:"JE",H:"CH",I:"HI",J:"GA",
+    K:"KH",L:"EL",M:"MN",N:"NH",O:"OU",
+    P:"PE",Q:"KU",R:"AR",S:"TS",T:"TI",
+    U:"OI",V:"E",W:"VU",X:"LC",Y:"IE",Z:"ZA"
 };
 
-function translateText() {
+function translate() {
 
-    const text = document.getElementById("input").value;
+    const input = document.getElementById("input").value;
 
-    let output = "";
+    // STEP 1: build tokens
+    let tokens = [];
 
-    let prevChar = null;
-    let prevChunk = null;
-
-    for (let i = 0; i < text.length; i++) {
-
-        let c = text[i];
-
-        if (!alphabet[c.toUpperCase()]) continue;
-
-        let chunk = alphabet[c.toUpperCase()];
-
-        // preserve case (optional but consistent)
-        if (c === c.toLowerCase()) {
-            chunk = chunk.toLowerCase();
+    for (let ch of input) {
+        if (ch === " ") {
+            tokens.push({ type: "space" });
+        } else {
+            let up = ch.toUpperCase();
+            if (alphabet[up]) {
+                tokens.push({
+                    type: "char",
+                    char: ch,
+                    chunk: alphabet[up]
+                });
+            }
         }
-
-        // =========================
-        // RULE 1: same LETTER repeat → '
-        // =========================
-        if (c === prevChar) {
-            output += "'";
-        }
-
-        // =========================
-        // RULE 2: same CHUNK repeat → "
-        // =========================
-        else if (chunk === prevChunk) {
-            output += '"';
-        }
-
-        else {
-            output += chunk;
-        }
-
-        prevChar = c;
-        prevChunk = chunk;
     }
 
-    document.getElementById("output").textContent = output;
+    // STEP 2: process groups
+    let out = "";
+    let i = 0;
+
+    while (i < tokens.length) {
+
+        let t = tokens[i];
+
+        if (t.type === "space") {
+            out += "_";
+            i++;
+            continue;
+        }
+
+        let letterCount = 1;
+        let chunkCount = 1;
+
+        // count letter repeats
+        while (
+            i + letterCount < tokens.length &&
+            tokens[i + letterCount].type === "char" &&
+            tokens[i + letterCount].char === t.char
+        ) {
+            letterCount++;
+        }
+
+        // count chunk repeats
+        while (
+            i + chunkCount < tokens.length &&
+            tokens[i + chunkCount].type === "char" &&
+            tokens[i + chunkCount].chunk === t.chunk
+        ) {
+            chunkCount++;
+        }
+
+        // =========================
+        // RULE 1: letter repeat → '
+        // =========================
+        if (letterCount > 1) {
+            out += t.chunk + "'";
+            i += letterCount;
+            continue;
+        }
+
+        // emit chunk
+        out += t.chunk;
+
+        // =========================
+        // RULE 2: chunk repeat → "
+        // =========================
+        let extras = chunkCount - 1;
+
+        if (extras === 1) out += "'";
+        else if (extras === 2) out += '"';
+        else if (extras > 2) {
+            out += '"'.repeat(Math.floor(extras / 2));
+            if (extras % 2 === 1) out += "'";
+        }
+
+        i += chunkCount;
+    }
+
+    document.getElementById("output").textContent = out;
 }
 
 </script>
