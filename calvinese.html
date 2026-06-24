@@ -199,9 +199,9 @@ textarea {
 
 </script> 
 
-<h1>English → Custom Alphabet (Case Sensitive)</h1>
+<h1>Custom Alphabet Translator</h1>
 
-<textarea id="input" placeholder="Enter text"></textarea>
+<textarea id="input"></textarea>
 <br>
 <button onclick="translateText()">Translate</button>
 
@@ -221,42 +221,54 @@ function translateText() {
 
     const text = document.getElementById("input").value;
 
-    let prevChar = null;
-    let prevChunk = null;
-
-    let output = "";
+    // STEP 1: convert to chunks (case-sensitive)
+    let chunks = [];
 
     for (let c of text) {
+        if (alphabet[c.toUpperCase()]) {
+            chunks.push({
+                char: c,
+                chunk: alphabet[c.toUpperCase()]
+            });
+        }
+    }
 
-        if (!alphabet[c.toUpperCase()]) continue;
+    // STEP 2: group + apply rules
+    let output = "";
+    let i = 0;
 
-        let chunk = alphabet[c.toUpperCase()];
+    while (i < chunks.length) {
 
-        // preserve case inside chunk (optional consistency)
-        if (c === c.toLowerCase()) {
-            chunk = chunk.toLowerCase();
+        let current = chunks[i];
+
+        let count = 1;
+
+        while (
+            i + count < chunks.length &&
+            chunks[i + count].chunk === current.chunk
+        ) {
+            count++;
         }
 
-        // RULE 1: same input letter repeat → '
-        if (c === prevChar) {
-            output += "'";
+        output += current.chunk;
+
+        let extras = count - 1;
+
+        // chunk repeats → "
+        if (extras === 1) output += "'";
+        else if (extras === 2) output += '"';
+        else if (extras > 2) {
+            output += '"'.repeat(Math.floor(extras / 2));
+            if (extras % 2 === 1) output += "'";
         }
 
-        // RULE 2: same chunk repeat → "
-        else if (chunk === prevChunk) {
-            output += '"';
-        }
-
-        else {
-            output += chunk;
-        }
-
-        prevChar = c;
-        prevChunk = chunk;
+        i += count;
     }
 
     document.getElementById("output").textContent = output;
 }
+
+</script>
 
 </script>
 
