@@ -1,0 +1,230 @@
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>History of the Kouz Islands</title>
+
+<style>
+/* Page spacing */
+body {
+  margin: 30px;
+  font-family: Arial, sans-serif;
+} 
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+} 
+</style>
+</head>
+
+<!-- Header -->
+
+<h1 style="text-align:center;">
+  <a href="homepage.html">
+    <img src="images/emblem2.png" height="125" width="125" alt="Emblem">
+  </a>
+</h1>
+<h2 style="font-family:Georgia; background-color:#D1C4E9;"> History of the Kouz Islands</h2>
+
+
+
+<body>
+<style>
+/* Page spacing */
+
+.main { 
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+} 
+
+.main p { 
+	margin: 10px;
+} 
+
+.subheader { 
+	font-size: 12px;
+	font-style: italic;
+	margin-left: 30px;
+} 
+
+/* Infobox */
+.toc {
+  width: 300px;
+  float: right;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.toc h1 {
+  background-color: #eee;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+} 
+  
+  
+/* Figure styling */
+.history-figure { 
+  margin: 10px 0;
+}
+
+.history-figure img {
+  display: block;
+  max-width: 100%;
+	margin: 0 auto;
+}
+
+.history-figure figcaption {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+
+/* in text images*/ 
+.history-figure-text { 
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	margin: 10px;
+} 
+
+.history-figure-text img { 
+	display: block;
+	max-width: 100%;
+} 
+
+.history-figure-text figcaption { 
+	font-size: 12px;
+	font-family: Arial;
+	font-style: italic;
+	padding: 5px;
+} 
+	
+/* Accordion section */
+.section {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.header {
+  background: #eee;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+.content ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 5px 0;
+}
+</style>
+<!-- TOC -->
+<div class="main">
+	<div class="toc">
+	  <h1>History of the Kouz Islands</h1>
+	  <div class="history-figure">
+		<img src="images/cvmap.png" alt="History image" >
+		<figcaption>Map of the Kouz Islands</figcaption>
+	  </div>
+
+	  <div class="section">
+		<div class="header" onclick="toggle(this)">Contents [show]</div>
+		<div class="content">
+		  <ol>
+			 <li><a href="#anchor1">Early History and Berber Period</a></li>
+			<li><a href="#anchor2">Middle Age European Encounters</a></li>
+			<li><a href="#anchor3">Early Modern XXX</a></li>
+			<li><a href="#anchor4">The Long 19th Century</a></li>
+			<li><a href="#anchor5">World War I, the inter-war period, and World War II</a></li>
+			<li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
+		  </ol>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+	 function toggle(header) {
+  const content = header.nextElementSibling;
+
+  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+    // Currently open → close it
+    content.style.maxHeight = "0px";
+    header.textContent = header.textContent.replace("[hide]", "[show]");
+  } else {
+    // Currently closed → open it
+    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
+    header.textContent = header.textContent.replace("[show]", "[hide]");
+  }
+} 
+</script> 
+
+
+
+    <h1>English to Code Translator</h1>
+
+    <textarea id="input" placeholder="Type something like: create a red button"></textarea>
+    <br>
+    <button onclick="translateToCode()">Translate</button>
+
+    <pre id="output">Code will appear here...</pre>
+
+    <script>
+        function translateToCode() {
+            let text = document.getElementById("input").value.toLowerCase();
+            let code = "No translation found.";
+
+            if (text.includes("red button")) {
+                code =
+`<button style="background:red;color:white;">
+    Click Me
+</button>`;
+            }
+            else if (text.includes("blue heading")) {
+                code =
+`<h1 style="color:blue;">
+    My Heading
+</h1>`;
+            }
+            else if (text.includes("text box")) {
+                code =
+`<input type="text" placeholder="Enter text">`;
+            }
+            else if (text.includes("alert message")) {
+                code =
+`alert("Hello World!");`;
+            }
+            else if (text.includes("green paragraph")) {
+                code =
+`<p style="color:green;">
+    This is a paragraph.
+</p>`;
+            }
+
+            document.getElementById("output").textContent = code;
+        }
+    </script>
+
+</body>   
+   
