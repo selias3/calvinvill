@@ -383,58 +383,66 @@ textarea {
 <button onclick="translateText()">Translate</button>
 
 <div id="output"></div>
+
 <script>
+
+const alphabet = {
+    a: "eh", b: "be", c: "si", d: "di", e: "i",
+    f: "fh", g: "je", h: "ch", i: "hi", j: "ga",
+    k: "kh", l: "el", m: "mn", n: "nh", o: "ou",
+    p: "pe", q: "ku", r: "ar", s: "ts", t: "ti",
+    u: "oi", v: "e", w: "vu", x: "lc", y: "ie", z: "a"
+};
+
 function translateText() {
     const text = document.getElementById("input").value.toLowerCase();
 
     let output = "";
-    let i = 0;
+      let i = 0;
 
-    let previousChunk = "";
-    let inQuote = false;
+      // Stores the original translated chunk
+      let previousChunk = "";
+
+      // Tracks whether we're inside quotation marks
+      let inQuote = false;
 
     while (i < text.length) {
 
-        // Convert quotes → guillemets
-        if (
-            text[i] === '"' ||
-            text[i] === "“" ||
-            text[i] === "”"
-        ) {
-            output += inQuote ? " »" : "« ";
-            inQuote = !inQuote;
-            previousChunk = "";
-            i++;
-            continue;
-        }
+      // Convert English quotes to French guillemets
+      if (
+        text[i] === '"' ||
+        text[i] === "“" ||
+        text[i] === "”"
+    ) {
+        output += inQuote ? " »" : "« ";
+        inQuote = !inQuote;
+        previousChunk = "";
+        i++;
+        continue;
+    }
 
-        // Preserve punctuation
-        if (
-            text[i] === " " ||
-            text[i] === "." ||
-            text[i] === "," ||
-            text[i] === "!" ||
-            text[i] === "?" ||
-            text[i] === ":" ||
-            text[i] === ";" ||
-            text[i] === "(" ||
-            text[i] === ")" ||
-            text[i] === "—" ||
-            text[i] === "–"
-        ) {
-            output += text[i];
-            previousChunk = "";
-            i++;
-            continue;
-        }
+      // Preserve punctuation and reset chunk comparison
+      if (
+          text[i] === " " ||
+          text[i] === "." ||
+          text[i] === "," ||
+          text[i] === "!" ||
+          text[i] === "?" ||
+          text[i] === ":" ||
+          text[i] === ";" ||
+          text[i] === "(" ||
+          text[i] === ")" ||
+          text[i] === "—" ||   // em dash
+          text[i] === "–"      // en dash (optional)
+      ) {
+          output += text[i];
+          previousChunk = "";
+          i++;
+          continue;
+      }
 
-        let c = text[i];
-        let key = c;
-
-        if (!alphabet[key]) {
-            i++;
-            continue;
-        }
+      let c = text[i];
+      let key = c;
 
         // Count consecutive identical letters
         let count = 1;
@@ -447,20 +455,27 @@ function translateText() {
 
         let chunk = alphabet[key];
 
-        // Save original chunk
+        // Preserve lowercase
+        if (c === c.toLowerCase()) {
+            chunk = chunk.toLowerCase();
+        }
+
+        // Save the original chunk for future comparisons
         const originalChunk = chunk;
 
-        // apostrophe rule (boundary match)
+        // If the previous chunk ends with the same letter
+        // this chunk starts with, replace the first letter with '
         if (
             previousChunk &&
-            previousChunk[previousChunk.length - 1] === chunk[0]
+            previousChunk[previousChunk.length - 1].toUpperCase() ===
+            chunk[0].toUpperCase()
         ) {
             chunk = "'" + chunk.slice(1);
         }
 
         output += chunk;
 
-        // repetition markers
+        // Repetition markers for consecutive identical letters
         if (count === 2) {
             output += '"';
         } else if (count > 2) {
@@ -468,13 +483,15 @@ function translateText() {
             if (count % 2 === 1) output += "'";
         }
 
+        // Store the ORIGINAL chunk, not the modified one
         previousChunk = originalChunk;
 
         i += count;
     }
 
     document.getElementById("output").textContent = output;
-} 
+}
+
 </script>
 </div>
 
