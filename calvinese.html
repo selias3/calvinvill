@@ -87,8 +87,6 @@ html {
   margin-top: 5px;
 }
 
-
-
 /* in text images*/ 
 .history-figure-text { 
 	background-color: #ffffff;
@@ -156,7 +154,41 @@ textarea {
             border-radius: 5px;
             word-break: break-word;
         }
+
+.wikitable {
+    border-collapse: collapse;
+    width: 50%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: #fff;
+    color: #202122;
+    float: center;
+}
+
+.wikitable th,
+.wikitable td {
+    border: 1px solid #a2a9b1;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.wikitable th {
+    background-color: #eaecf0;
+    font-weight: bold;
+}
+
+.wikitable tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.wikitable caption {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+}
 </style>
+
+
 <!-- TOC -->
 <div class="main">
 	<div class="toc">
@@ -199,7 +231,33 @@ textarea {
 
 </script> 
 
-<h1>Custom Alphabet Translator (Case Sensitive)</h1>
+<div class="main">
+	<h1 id="anchor1" colspan="2" style="font-size: 18px; text-align:left; background-color:#EEEEEE">Background</h1>
+		<p>
+    </p>
+</div>
+
+<div class="main">
+	<h1 id="anchor2" colspan="2" style="font-size: 18px; text-align:left; background-color:#EEEEEE">Grammar</h1>
+		<p>
+    </p>
+</div>
+
+<div class="main">
+	<h1 id="anchor3" colspan="2" style="font-size: 18px; text-align:left; background-color:#EEEEEE">Alphabet</h1>
+	  <div>
+      <table class="wikitable">
+          <tr>
+            <th colspan="1" style="background:#d8e2f1;">English</th>
+          </tr>
+          <tr>A</tr> <tr>B</tr> <tr>C</tr> <tr>D</tr> <tr>E</tr>   
+    </div>
+</div>
+
+
+
+
+<h1>Calvinese Translator</h1>
 
 <textarea id="input"></textarea>
 <br>
