@@ -396,20 +396,48 @@ function translateText() {
     const text = document.getElementById("input").value;
 
     let output = "";
-    let i = 0;
+      let i = 0;
 
-    // Stores the original translated chunk (not one modified with ')
-    let previousChunk = "";
+      // Stores the original translated chunk
+      let previousChunk = "";
+
+      // Tracks whether we're inside quotation marks
+      let inQuote = false;
 
     while (i < text.length) {
 
-        // Preserve spaces
-        if (text[i] === " ") {
-            output += " ";
-            previousChunk = "";
-            i++;
-            continue;
-        }
+      // Convert English quotes to French guillemets
+      if (
+        text[i] === '"' ||
+        text[i] === "“" ||
+        text[i] === "”"
+    ) {
+        output += inQuote ? " »" : "« ";
+        inQuote = !inQuote;
+        previousChunk = "";
+        i++;
+        continue;
+    }
+
+      // Preserve punctuation and reset chunk comparison
+      if (
+          text[i] === " " ||
+          text[i] === "." ||
+          text[i] === "," ||
+          text[i] === "!" ||
+          text[i] === "?" ||
+          text[i] === ":" ||
+          text[i] === ";" ||
+          text[i] === "(" ||
+          text[i] === ")" ||
+          text[i] === "—" ||   // em dash
+          text[i] === "–"      // en dash (optional)
+      ) {
+          output += text[i];
+          previousChunk = "";
+          i++;
+          continue;
+      }
 
         let c = text[i];
         let key = c.toUpperCase();
