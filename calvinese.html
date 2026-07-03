@@ -383,66 +383,57 @@ textarea {
 <button onclick="translateText()">Translate</button>
 
 <div id="output"></div>
-
 <script>
-
-const alphabet = {
-    A: "EH", B: "BE", C: "SI", D: "DI", E: "I",
-    F: "FH", G: "JE", H: "CH", I: "HI", J: "GA",
-    K: "KH", L: "EL", M: "MN", N: "NH", O: "OU",
-    P: "PE", Q: "KU", R: "AR", S: "TS", T: "TI",
-    U: "OI", V: "E", W: "VU", X: "LC", Y: "IE", Z: "A"
-};
-
 function translateText() {
     const text = document.getElementById("input").value.toLowerCase();
 
     let output = "";
-      let i = 0;
+    let i = 0;
 
-      // Stores the original translated chunk
-      let previousChunk = "";
-
-      // Tracks whether we're inside quotation marks
-      let inQuote = false;
+    let previousChunk = "";
+    let inQuote = false;
 
     while (i < text.length) {
 
-      // Convert English quotes to French guillemets
-      if (
-        text[i] === '"' ||
-        text[i] === "“" ||
-        text[i] === "”"
-    ) {
-        output += inQuote ? " »" : "« ";
-        inQuote = !inQuote;
-        previousChunk = "";
-        i++;
-        continue;
-    }
+        // Convert quotes → guillemets
+        if (
+            text[i] === '"' ||
+            text[i] === "“" ||
+            text[i] === "”"
+        ) {
+            output += inQuote ? " »" : "« ";
+            inQuote = !inQuote;
+            previousChunk = "";
+            i++;
+            continue;
+        }
 
-      // Preserve punctuation and reset chunk comparison
-      if (
-          text[i] === " " ||
-          text[i] === "." ||
-          text[i] === "," ||
-          text[i] === "!" ||
-          text[i] === "?" ||
-          text[i] === ":" ||
-          text[i] === ";" ||
-          text[i] === "(" ||
-          text[i] === ")" ||
-          text[i] === "—" ||   // em dash
-          text[i] === "–"      // en dash (optional)
-      ) {
-          output += text[i];
-          previousChunk = "";
-          i++;
-          continue;
-      }
+        // Preserve punctuation
+        if (
+            text[i] === " " ||
+            text[i] === "." ||
+            text[i] === "," ||
+            text[i] === "!" ||
+            text[i] === "?" ||
+            text[i] === ":" ||
+            text[i] === ";" ||
+            text[i] === "(" ||
+            text[i] === ")" ||
+            text[i] === "—" ||
+            text[i] === "–"
+        ) {
+            output += text[i];
+            previousChunk = "";
+            i++;
+            continue;
+        }
 
         let c = text[i];
         let key = c;
+
+        if (!alphabet[key]) {
+            i++;
+            continue;
         }
 
         // Count consecutive identical letters
@@ -456,27 +447,20 @@ function translateText() {
 
         let chunk = alphabet[key];
 
-        // Preserve lowercase
-        if (c === c.toLowerCase()) {
-            chunk = chunk.toLowerCase();
-        }
-
-        // Save the original chunk for future comparisons
+        // Save original chunk
         const originalChunk = chunk;
 
-        // If the previous chunk ends with the same letter
-        // this chunk starts with, replace the first letter with '
+        // apostrophe rule (boundary match)
         if (
             previousChunk &&
-            previousChunk[previousChunk.length - 1].toUpperCase() ===
-            chunk[0].toUpperCase()
+            previousChunk[previousChunk.length - 1] === chunk[0]
         ) {
             chunk = "'" + chunk.slice(1);
         }
 
         output += chunk;
 
-        // Repetition markers for consecutive identical letters
+        // repetition markers
         if (count === 2) {
             output += '"';
         } else if (count > 2) {
@@ -484,14 +468,13 @@ function translateText() {
             if (count % 2 === 1) output += "'";
         }
 
-        // Store the ORIGINAL chunk, not the modified one
         previousChunk = originalChunk;
 
         i += count;
     }
 
     document.getElementById("output").textContent = output;
-  } 
+} 
 </script>
 </div>
 
