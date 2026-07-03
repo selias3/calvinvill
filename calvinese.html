@@ -418,7 +418,7 @@ function translateText() {
         output += chunk;
 
         // repetition markers
-        if (count ===  1) output += "'";
+        if (count ===  2) output += "'";
         else if (count === 2) output += '"';
         else if (count > 3) {
             output += '"'.repeat(Math.floor(count / 2));
