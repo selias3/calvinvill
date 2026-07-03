@@ -66,7 +66,13 @@ html {
   background-color: #eee;
   text-align: center;
   font-size: 14px;
-  padding: 10px;
+  padding: 5px;
+} 
+.toc h2 {
+  background-color: #eee;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
 } 
 
 .subcatergories { 
@@ -199,6 +205,7 @@ textarea {
 <div class="main">
 	<div class="toc">
 	  <h1 style="background-color: #f0de8d;">Calvinese Language</h1>
+    <h1 style="background-color: #f0de8d;">siehelehinhitsi elehnhjeoiehjei</h1>
 	  <div class="history-figure">
 		<img src="images/calvinese.jpg" alt="History image">
 		<figcaption>Picture of the first known example of the Calvinese Alphabet</figcaption>
@@ -418,7 +425,7 @@ function translateText() {
         output += chunk;
 
         // repetition markers
-        if (count ===  2) output += "'";
+        if (count ===  1.5) output += "'";
         else if (count === 2) output += '"';
         else if (count > 3) {
             output += '"'.repeat(Math.floor(count / 2));
