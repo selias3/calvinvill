@@ -375,7 +375,9 @@ textarea {
 
 <div class="main">
 	<h1 id="anchor4" colspan="2" style="font-size: 18px; text-align:left; background-color:#EEEEEE">Translator</h1>
+    <p> Calvinese is typically written in all lowercase. In the input, 
 
+    </p>
 <textarea id="input"></textarea>
 <br>
 <button onclick="translateText()">Translate</button>
@@ -393,7 +395,7 @@ const alphabet = {
 };
 
 function translateText() {
-    const text = document.getElementById("input").value;
+    const text = document.getElementById("input").value.toLowerCase();
 
     let output = "";
       let i = 0;
@@ -440,11 +442,7 @@ function translateText() {
       }
 
         let c = text[i];
-        let key = c.toUpperCase();
-
-        if (!alphabet[key]) {
-            i++;
-            continue;
+        let key = c;
         }
 
         // Count consecutive identical letters
