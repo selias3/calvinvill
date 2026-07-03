@@ -387,13 +387,15 @@ function translateText() {
     let output = "";
     let i = 0;
 
+    // Stores the original translated chunk (not one modified with ')
+    let previousChunk = "";
+
     while (i < text.length) {
 
-        // =========================
-        // SPACE HANDLING (NEW)
-        // =========================
+        // Preserve spaces
         if (text[i] === " ") {
             output += " ";
+            previousChunk = "";
             i++;
             continue;
         }
@@ -406,7 +408,7 @@ function translateText() {
             continue;
         }
 
-        // 1. Count identical consecutive letters
+        // Count consecutive identical letters
         let count = 1;
         while (
             i + count < text.length &&
@@ -417,26 +419,43 @@ function translateText() {
 
         let chunk = alphabet[key];
 
-        // preserve case
+        // Preserve lowercase
         if (c === c.toLowerCase()) {
             chunk = chunk.toLowerCase();
         }
 
+        // Save the original chunk for future comparisons
+        const originalChunk = chunk;
+
+        // If the previous chunk ends with the same letter
+        // this chunk starts with, replace the first letter with '
+        if (
+            previousChunk &&
+            previousChunk[previousChunk.length - 1].toUpperCase() ===
+            chunk[0].toUpperCase()
+        ) {
+            chunk = "'" + chunk.slice(1);
+        }
+
         output += chunk;
 
-        // repetition markers
-        if (count ===  1.5) output += "'";
-        else if (count === 2) output += '"';
-        else if (count > 3) {
+        // Repetition markers for consecutive identical letters
+        if (count === 2) {
+            output += '"';
+        } else if (count > 2) {
             output += '"'.repeat(Math.floor(count / 2));
             if (count % 2 === 1) output += "'";
         }
+
+        // Store the ORIGINAL chunk, not the modified one
+        previousChunk = originalChunk;
 
         i += count;
     }
 
     document.getElementById("output").textContent = output;
 }
+
 </script>
 </div>
 
