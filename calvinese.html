@@ -429,7 +429,31 @@ function translateText() {
     let inQuote = false;
 
     while (i < text.length) {
+    
+    // -------------------------
+    // FORMATTING PASS-THROUGH
+    // -------------------------
 
+    // bold (**text**)
+    if (text.slice(i, i + 2) === "**") {
+        output += "**";
+        i += 2;
+        continue;
+    }
+
+    // underline (__text__)
+    if (text.slice(i, i + 2) === "__") {
+        output += "__";
+        i += 2;
+        continue;
+    }
+
+    // italics (*text* or _text_)
+    if (text[i] === "*" || text[i] === "_") {
+        output += text[i];
+        i++;
+        continue;
+    }                                     
         // -------------------------
         // QUOTES → GUILLEMETS
         // -------------------------
