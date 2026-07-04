@@ -396,7 +396,6 @@ textarea {
       each letter in the Calvinese alphabet consists of two English letters, abbreviations are translated into Calvinese 
       using the first letter of the corresponding Calvinese letter. 
     </p>
-    
 </div>
 
 <div class="main">
@@ -421,7 +420,7 @@ const alphabet = {
 };
 
 function translateText() {
-    const text = document.getElementById("input").value.toLowerCase();
+    const text = document.getElementById("input").value;
 
     let output = "";
     let i = 0;
@@ -447,39 +446,40 @@ function translateText() {
         }
 
         // -------------------------
-        // ABBREVIATIONS (FIXED DOT SYSTEM)
+        // ABBREVIATIONS (ACRONYM HANDLING)
         // -------------------------
-        let abbrevMatch = text.slice(i).match(/^[a-z]{2,}(?:\.[a-z]{1,})*\.?/);
+
+        let abbrevMatch = text.slice(i).match(/^(?:[A-Z]\.?){2,}/);
 
         if (abbrevMatch) {
-            let raw = abbrevMatch[0];
+            const raw = abbrevMatch[0];
 
-            // explicitly detect trailing dot from the actual match
-            let hasTrailingDot = /\.$/.test(raw);
+            // Extract letters only (remove dots)
+            const letters = raw.replace(/\./g, "");
 
-            let letters = raw.replace(/\./g, "").toLowerCase();
+            // Only treat as acronym if it's 2+ letters
+            if (letters.length >= 2 && letters === letters.toUpperCase()) {
 
-            let parts = letters
-                .split("")
-                .map(char => {
-                    let chunk = alphabet[char];
-                    return chunk ? chunk[0] : "";
-                })
-                .filter(Boolean);
+                // Build chunk: always lowercase + dot-separated
+                let result = letters
+                    .toLowerCase()
+                    .split("")
+                    .map(char => alphabet[char]?.[0] || "")
+                    .filter(Boolean)
+                    .join(".");
 
-            let result = parts.join(".");
+                // If original had trailing dot OR was dotted format, preserve final dot style
+                if (raw.endsWith(".") || raw.includes(".")) {
+                    result += ".";
+                }
 
-            if (hasTrailingDot) {
-                result += ".";
+                output += result;
+
+                previousChunk = "";
+                i += raw.length;
+                continue;
             }
-
-            output += result;
-
-            previousChunk = "";
-            i += raw.length;
-            continue;
-        }   
-
+        }
         // -------------------------
         // PUNCTUATION HANDLING
         // -------------------------
@@ -507,7 +507,7 @@ function translateText() {
         // CORE TRANSLATION
         // -------------------------
         let c = text[i];
-        let key = c;
+        let key = c.toLowerCase();
 
         let chunk = alphabet[key];
 
