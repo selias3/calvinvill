@@ -446,12 +446,13 @@ function translateText() {
         // -------------------------
         // ABBREVIATIONS (FIXED DOT SYSTEM)
         // -------------------------
-        let abbrevMatch = text.slice(i).match(/^[a-z]{2,}(\.[a-z]{1,})*\.?/);
+        let abbrevMatch = text.slice(i).match(/^[a-z]{2,}(?:\.[a-z]{1,})*\.?/);
 
         if (abbrevMatch) {
             let raw = abbrevMatch[0];
 
-            let hasTrailingDot = raw.endsWith(".");
+            // explicitly detect trailing dot from the actual match
+            let hasTrailingDot = /\.$/.test(raw);
 
             let letters = raw.replace(/\./g, "").toLowerCase();
 
@@ -474,7 +475,7 @@ function translateText() {
             previousChunk = "";
             i += raw.length;
             continue;
-        }
+        }   
 
         // -------------------------
         // PUNCTUATION HANDLING
