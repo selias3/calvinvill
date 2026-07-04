@@ -444,7 +444,40 @@ function translateText() {
         }
 
         // -------------------------
-        // PUNCTUATION PASS-THROUGH
+        // ABBREVIATIONS (FIXED DOT SYSTEM)
+        // -------------------------
+        let abbrevMatch = text.slice(i).match(/^[a-z]{2,}(\.[a-z]{1,})*\.?/);
+
+        if (abbrevMatch) {
+            let raw = abbrevMatch[0];
+
+            let hasTrailingDot = raw.endsWith(".");
+
+            let letters = raw.replace(/\./g, "").toLowerCase();
+
+            let parts = letters
+                .split("")
+                .map(char => {
+                    let chunk = alphabet[char];
+                    return chunk ? chunk[0] : "";
+                })
+                .filter(Boolean);
+
+            let result = parts.join(".");
+
+            if (hasTrailingDot) {
+                result += ".";
+            }
+
+            output += result;
+
+            previousChunk = "";
+            i += raw.length;
+            continue;
+        }
+
+        // -------------------------
+        // PUNCTUATION HANDLING
         // -------------------------
         if (
             text[i] === " " ||
@@ -467,14 +500,13 @@ function translateText() {
         }
 
         // -------------------------
-        // TRANSLATION CORE
+        // CORE TRANSLATION
         // -------------------------
         let c = text[i];
         let key = c;
 
         let chunk = alphabet[key];
 
-        // skip invalid characters safely
         if (!chunk) {
             i++;
             continue;
