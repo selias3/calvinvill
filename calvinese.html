@@ -454,13 +454,13 @@ function translateText() {
         if (abbrevMatch) {
             const raw = abbrevMatch[0];
 
-            // Extract letters only (remove dots)
+            // remove dots to get pure letters
             const letters = raw.replace(/\./g, "");
 
-            // Only treat as acronym if it's 2+ letters
+            // ensure it's a real acronym (2+ uppercase letters)
             if (letters.length >= 2 && letters === letters.toUpperCase()) {
 
-                // Build chunk: always lowercase + dot-separated
+                // build translation: always lowercase + dot-separated phonemes
                 let result = letters
                     .toLowerCase()
                     .split("")
@@ -468,10 +468,8 @@ function translateText() {
                     .filter(Boolean)
                     .join(".");
 
-                // If original had trailing dot OR was dotted format, preserve final dot style
-                if (raw.endsWith(".") || raw.includes(".")) {
-                    result += ".";
-                }
+                // ALWAYS enforce trailing dot in translation
+                result += ".";
 
                 output += result;
 
