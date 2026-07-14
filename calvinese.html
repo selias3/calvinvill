@@ -221,44 +221,35 @@ textarea {
 
 .converter-container {
     display: flex;
-    gap: 20px;
+    gap: 40px;
     margin: 20px 0;
 }
 
 .converter-panel {
-    flex: 1;
-}
-
-.converter-panel h3 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    background: #eaecf0;
-    border: 1px solid #a2a9b1;
-    padding: 6px;
-    font-size: 14px;
-    font-family: Arial, sans-serif;
+    width: 50%;
 }
 
 .converter-panel textarea {
-    width: 50%;
-    height: 140px;
+    width: 100%;
+    height: 120px;
     padding: 10px;
     box-sizing: border-box;
-    resize: vertical;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
 }
 
-.converter-output {
+.calvinese-output {
     margin-top: 10px;
-    min-height: 140px;
-    border: 1px solid #a2a9b1;
+    width: 100%;
+    min-height: 120px;
     background: #d8e2f1;
-    padding: 10px;
-    white-space: pre-wrap;
-    word-break: break-word;
+    border: 1px solid #a2a9b1;
+    padding: 15px;
+    box-sizing: border-box;
+
     font-family: Calvinese;
-    font-size: 28px;
+    font-size: 32px;
+
+    white-space: pre-wrap;
+    overflow: hidden;
 }
 </style>
 
@@ -722,41 +713,227 @@ function translateText() {
               <td>Z</td>
           </tr>
     </table>
+
     <p>In addition to the Calvinese latin alphabet, there was also the development of a script. The Calvinese script is composed of  </p>
+    
     <div class="converter-container">
-
-    <div class="converter-panel">
-        <h3>English → Calvinesescript</h3>
-
-        <textarea id="upperInput"
-                  placeholder="Type English here..."></textarea>
-
-        <div id="upperOutput" class="converter-output"></div>
+      <div class="converter-panel">
+          <h3>English → Calvinese</h3>
+          <textarea id="englishInput"
+          placeholder="Type English here..."></textarea>
+          <div id="englishOutput"
+          class="calvinese-output"></div>
+      </div>
+      <div class="converter-panel">
+          <h3>Romanized Calvinese → Calvinese</h3>
+          <textarea id="romanInput"
+          placeholder="Type Calvinese romanization here..."></textarea>
+          <div id="romanOutput"
+          class="calvinese-output"></div>
+      </div>
     </div>
-
-    <div class="converter-panel">
-        <h3>Calvinese latin alphabet → Calvinese script</h3>
-
-        <textarea id="lowerInput"
-                  placeholder="Type Calvinese latin alphabet here..."></textarea>
-
-        <div id="lowerOutput" class="converter-output"></div>
-    </div>
+    
     <script>
-        const upperInput = document.getElementById("upperInput");
-        const lowerInput = document.getElementById("lowerInput");
 
-        const upperOutput = document.getElementById("upperOutput");
-        const lowerOutput = document.getElementById("lowerOutput");
+// English letter -> Calvinese romanization
 
-        upperInput.addEventListener("input", function () {
-            upperOutput.textContent = upperInput.value.toUpperCase();
-        });
+const englishMap = {
 
-        lowerInput.addEventListener("input", function () {
-            lowerOutput.textContent = lowerInput.value.toLowerCase();
-        });
-      </script>
+"A":"EH",
+"B":"BE",
+"C":"SI",
+"D":"DI",
+"E":"I",
+"F":"FH",
+"G":"JE",
+"H":"CH",
+"I":"HI",
+"J":"GA",
+"K":"KH",
+"L":"EL",
+"M":"MN",
+"N":"NH",
+"O":"OU",
+"P":"PE",
+"Q":"KU",
+"R":"AR",
+"S":"TS",
+"T":"TI",
+"U":"OI",
+"V":"E",
+"W":"VU",
+"X":"LC",
+"Y":"IE",
+"Z":"A"
+
+};
+
+
+
+// Calvinese romanization -> font glyph
+
+// Replace these with your font's actual glyph locations
+
+const glyphMap = {
+
+"EH":"\uE000",
+"BE":"\uE001",
+"SI":"\uE002",
+"DI":"\uE003",
+"I":"\uE004",
+"FH":"\uE005",
+"JE":"\uE006",
+"CH":"\uE007",
+"HI":"\uE008",
+"GA":"\uE009",
+"KH":"\uE00A",
+"EL":"\uE00B",
+"MN":"\uE00C",
+"NH":"\uE00D",
+"OU":"\uE00E",
+"PE":"\uE00F",
+"KU":"\uE010",
+"AR":"\uE011",
+"TS":"\uE012",
+"TI":"\uE013",
+"OI":"\uE014",
+"E":"\uE015",
+"VU":"\uE016",
+"LC":"\uE017",
+"IE":"\uE018",
+"A":"\uE019"
+
+};
+
+
+
+// English mode
+
+function englishToChunks(text){
+
+    let output = "";
+
+    text = text.toUpperCase();
+
+    for(let char of text){
+
+        if(englishMap[char]){
+            output += englishMap[char] + " ";
+        }
+        else{
+            output += char;
+        }
+
+    }
+
+    return output.trim();
+}
+
+
+
+// Romanized Calvinese parser
+
+function romanToChunks(text){
+
+    text = text.toUpperCase();
+
+    let chunks = [];
+
+    let keys = Object.keys(glyphMap)
+        .sort((a,b)=>b.length-a.length);
+
+
+    while(text.length > 0){
+
+        let found = false;
+
+
+        for(let key of keys){
+
+            if(text.startsWith(key)){
+
+                chunks.push(key);
+
+                text = text.substring(key.length);
+
+                found = true;
+
+                break;
+            }
+
+        }
+
+
+        if(!found){
+
+            chunks.push(text[0]);
+
+            text=text.substring(1);
+
+        }
+
+    }
+
+
+    return chunks;
+
+}
+
+
+
+// Convert chunks into font characters
+
+function renderCalvinese(chunks){
+
+    let output="";
+
+    for(let chunk of chunks){
+
+        output += glyphMap[chunk] || chunk;
+
+    }
+
+    return output;
+
+}
+
+
+
+// English input
+
+englishInput.addEventListener("input",()=>{
+
+    let chunks =
+        englishToChunks(
+            englishInput.value
+        )
+        .split(" ");
+
+
+    englishOutput.textContent =
+        renderCalvinese(chunks);
+
+});
+
+
+
+// Romanized input
+
+romanInput.addEventListener("input",()=>{
+
+    let chunks =
+        romanToChunks(
+            romanInput.value
+        );
+
+
+    romanOutput.textContent =
+        renderCalvinese(chunks);
+
+});
+
+
+</script>
     <p style="font-family: Calvinese; font-size: 22px;">TEST</p>
 </div>
 
