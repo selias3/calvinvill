@@ -245,10 +245,11 @@ textarea {
     padding: 15px;
     box-sizing: border-box;
 
-    font-family: Calvinese;
-    font-size: 32px;
-
-    white-space: pre-wrap;
+    font-family:Calvinese;
+    font-size:20px;
+    white-space:pre-wrap;
+    font-feature-settings:"liga" 1;
+    font-variant-ligatures:common-ligatures;
     overflow: hidden;
 }
 </style>
@@ -718,14 +719,14 @@ function translateText() {
     
     <div class="converter-container">
       <div class="converter-panel">
-          <h3>English → Calvinese</h3>
+          <h3>English → Calvinese script</h3>
           <textarea id="englishInput"
           placeholder="Type English here..."></textarea>
           <div id="englishOutput"
           class="calvinese-output"></div>
       </div>
       <div class="converter-panel">
-          <h3>Romanized Calvinese → Calvinese</h3>
+          <h3>Romanized Calvinese → Calvinese script</h3>
           <textarea id="romanInput"
           placeholder="Type Calvinese romanization here..."></textarea>
           <div id="romanOutput"
@@ -733,206 +734,88 @@ function translateText() {
       </div>
     </div>
     
-    <script>
+<script>
+    // Apply Calvinese repeated-chunk rule.
+    // Example: "ouou" -> "ou\""
+    function applyRepeatRule(text){
 
-// English letter -> Calvinese romanization
+        text=text.toLowerCase();
 
-const englishMap = {
+        const chunks=[
+            "eh","be","si","di","fh","je","ch","hi","ga","kh",
+            "el","mn","nh","ou","pe","ku","ar","ts","ti","oi",
+            "vu","lc","ie","i","e","a"
+        ];
 
-"A":"EH",
-"B":"BE",
-"C":"SI",
-"D":"DI",
-"E":"I",
-"F":"FH",
-"G":"JE",
-"H":"CH",
-"I":"HI",
-"J":"GA",
-"K":"KH",
-"L":"EL",
-"M":"MN",
-"N":"NH",
-"O":"OU",
-"P":"PE",
-"Q":"KU",
-"R":"AR",
-"S":"TS",
-"T":"TI",
-"U":"OI",
-"V":"E",
-"W":"VU",
-"X":"LC",
-"Y":"IE",
-"Z":"A"
+        // Longest match first
+        chunks.sort((a,b)=>b.length-a.length);
 
-};
+        let parsed=[];
+        let i=0;
 
+        while(i<text.length){
 
+            if(/\s/.test(text[i])){
+                parsed.push(text[i]);
+                i++;
+                continue;
+            }
 
-// Calvinese romanization -> font glyph
+            let found=false;
 
-// Replace these with your font's actual glyph locations
+            for(const chunk of chunks){
+                if(text.substring(i,i+chunk.length)===chunk){
+                    parsed.push(chunk);
+                    i+=chunk.length;
+                    found=true;
+                    break;
+                }
+            }
 
-const glyphMap = {
-
-"EH":"\uE000",
-"BE":"\uE001",
-"SI":"\uE002",
-"DI":"\uE003",
-"I":"\uE004",
-"FH":"\uE005",
-"JE":"\uE006",
-"CH":"\uE007",
-"HI":"\uE008",
-"GA":"\uE009",
-"KH":"\uE00A",
-"EL":"\uE00B",
-"MN":"\uE00C",
-"NH":"\uE00D",
-"OU":"\uE00E",
-"PE":"\uE00F",
-"KU":"\uE010",
-"AR":"\uE011",
-"TS":"\uE012",
-"TI":"\uE013",
-"OI":"\uE014",
-"E":"\uE015",
-"VU":"\uE016",
-"LC":"\uE017",
-"IE":"\uE018",
-"A":"\uE019"
-
-};
-
-
-
-// English mode
-
-function englishToChunks(text){
-
-    let output = "";
-
-    text = text.toUpperCase();
-
-    for(let char of text){
-
-        if(englishMap[char]){
-            output += englishMap[char] + " ";
-        }
-        else{
-            output += char;
+            if(!found){
+                parsed.push(text[i]);
+                i++;
+            }
         }
 
-    }
+        let output=[];
 
-    return output.trim();
-}
+        for(const part of parsed){
 
-
-
-// Romanized Calvinese parser
-
-function romanToChunks(text){
-
-    text = text.toUpperCase();
-
-    let chunks = [];
-
-    let keys = Object.keys(glyphMap)
-        .sort((a,b)=>b.length-a.length);
-
-
-    while(text.length > 0){
-
-        let found = false;
-
-
-        for(let key of keys){
-
-            if(text.startsWith(key)){
-
-                chunks.push(key);
-
-                text = text.substring(key.length);
-
-                found = true;
-
-                break;
+            if(
+                output.length &&
+                part.length>1 &&
+                output[output.length-1]===part
+            ){
+                output[output.length-1]='"';
+            }else{
+                output.push(part);
             }
 
         }
 
-
-        if(!found){
-
-            chunks.push(text[0]);
-
-            text=text.substring(1);
-
-        }
-
+        return output.join("");
     }
 
 
-    return chunks;
+    // English
+    englishInput.addEventListener("input",()=>{
 
-}
+        englishOutput.textContent=
+            englishInput.value.toUpperCase();
 
-
-
-// Convert chunks into font characters
-
-function renderCalvinese(chunks){
-
-    let output="";
-
-    for(let chunk of chunks){
-
-        output += glyphMap[chunk] || chunk;
-
-    }
-
-    return output;
-
-}
+    });
 
 
+    // Romanized Calvinese
+    romanInput.addEventListener("input",()=>{
 
-// English input
+        romanOutput.textContent=
+            applyRepeatRule(
+                romanInput.value
+            );
 
-englishInput.addEventListener("input",()=>{
-
-    let chunks =
-        englishToChunks(
-            englishInput.value
-        )
-        .split(" ");
-
-
-    englishOutput.textContent =
-        renderCalvinese(chunks);
-
-});
-
-
-
-// Romanized input
-
-romanInput.addEventListener("input",()=>{
-
-    let chunks =
-        romanToChunks(
-            romanInput.value
-        );
-
-
-    romanOutput.textContent =
-        renderCalvinese(chunks);
-
-});
-
-
+    });             
 </script>
     <p style="font-family: Calvinese; font-size: 22px;">TEST</p>
 </div>
