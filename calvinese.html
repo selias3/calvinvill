@@ -182,6 +182,7 @@ textarea {
     background: #fff;
     color: #202122;
     float: center;
+    margin: 20px;
 }
 
 .wikitable th,
@@ -334,7 +335,7 @@ textarea {
       English letters. Below is the standardized Calvinese alphabet, as there have been different past iterations.
     </p>
     <div>
-      <table class="wikitable">
+      <table class="wikitable" style="width:min-content; height:min-content">
           <tr>
             <td colspan="1" style="background:#d8e2f1;">English</td>
             <td colspan="1" style="background:#dbaf58;">Calvinese</td>
@@ -715,7 +716,7 @@ function translateText() {
           </tr>
     </table>
 
-    <p>In addition to the Calvinese latin alphabet, there was also the development of a script. The Calvinese script is composed of  </p>
+    <p>In addition to the romanized Calvinese alphabet, there was also the development of a script. The Calvinese script is composed of  </p>
     
     <div class="converter-container">
       <div class="converter-panel">
@@ -781,7 +782,6 @@ function translateText() {
         let output=[];
 
         for(const part of parsed){
-
             if(
                 output.length &&
                 part.length>1 &&
@@ -791,12 +791,9 @@ function translateText() {
             }else{
                 output.push(part);
             }
-
         }
-
         return output.join("");
     }
-
 
     // English
     englishInput.addEventListener("input",()=>{
@@ -805,7 +802,6 @@ function translateText() {
             englishInput.value.toUpperCase();
 
     });
-
 
     // Romanized Calvinese
     romanInput.addEventListener("input",()=>{
@@ -817,7 +813,6 @@ function translateText() {
 
     });             
 </script>
-    <p style="font-family: Calvinese; font-size: 22px;">TEST</p>
 </div>
 
 <div class="main">
