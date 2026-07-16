@@ -744,69 +744,115 @@ function translateText() {
     // Example: "ouou" -> "ou\""
     function applyRepeatRule(text){
 
-        text=text.toLowerCase();
+    text=text.toLowerCase();
 
-        const chunks=[
-            "eh","be","si","di","fh","je","ch","hi","ga","kh",
-            "el","mn","nh","ou","pe","ku","ar","ts","ti","oi",
-            "vu","lc","ie","i","e","a"
-        ];
+    const chunks=[
+        "eh","be","si","di","fh","je","ch","hi","ga","kh",
+        "el","mn","nh","ou","pe","ku","ar","ts","ti","oi",
+        "vu","lc","ie","i","e","a"
+    ];
 
-        // Longest match first
-        chunks.sort((a,b)=>b.length-a.length);
+    chunks.sort((a,b)=>b.length-a.length);
 
-        let parsed=[];
-        let i=0;
+    let parsed=[];
+    let i=0;
 
-        while(i<text.length){
+    while(i<text.length){
 
-            if(/\s/.test(text[i])){
-                parsed.push(text[i]);
-                i++;
-                continue;
-            }
-
-            let found=false;
-
-            for(const chunk of chunks){
-                if(text.substring(i,i+chunk.length)===chunk){
-                    parsed.push(chunk);
-                    i+=chunk.length;
-                    found=true;
-                    break;
-                }
-            }
-
-            if(!found){
-                parsed.push(text[i]);
-                i++;
-            }
+        if(/\s/.test(text[i])){
+            parsed.push(text[i]);
+            i++;
+            continue;
         }
 
-        let output=[];
-
-        for(const part of parsed){
-            if(
-                output.length &&
-                part.length>1 &&
-                output[output.length-1]===part
-            ){
-                output[output.length-1]='"';
-            }else{
-                output.push(part);
+        if(text[i]==="'"){
+            if(parsed.length>0){
+                parsed.push(parsed[parsed.length-1]);
             }
+            i++;
+            continue;
         }
-        return output.join("");
+
+        let found=false;
+
+        for(const chunk of chunks){
+
+            if(text.substring(i,i+chunk.length)===chunk){
+
+                parsed.push(chunk);
+                i+=chunk.length;
+                found=true;
+                break;
+
+            }
+
+        }
+
+        if(!found){
+
+            parsed.push(text[i]);
+            i++;
+
+        }
+
     }
+
+    // Apply repeated chunk rule (")
+    let output=[];
+
+    for(const part of parsed){
+
+        if(
+            output.length &&
+            part.length>1 &&
+            output[output.length-1]===part
+        ){
+
+            output[output.length-1]='"';
+
+        }
+        else{
+
+            output.push(part);
+
+        }
+
+    }
+
+    return output.join("");
+
+}
 
     // English
     englishInput.addEventListener("input",()=>{
 
         englishOutput.textContent=
-            englishInput.value.toUpperCase();
-                applyRepeatRule(
-                    englishInput.value
-            );
+            function englishToScript(text){
+
+            text=text.toUpperCase();
+
+            let output="";
+
+            for(let i=0;i<text.length;i++){
+
+                const current=text[i];
+                const previous=i>0 ? text[i-1] : "";
+
+                if(
+                    current>="A" &&
+                    current<="Z" &&
+                    current===previous
+                ){
+                    output+='"';
+                }
+                else{
+                    output+=current;
+                }
+
+            }
+
+            return output;
+        }
 
     });
 
@@ -818,7 +864,55 @@ function translateText() {
                 romanInput.value
             );
 
+// Convert chunks into font characters
+
+function renderCalvinese(chunks){
+
+    let output="";
+
+    for(let chunk of chunks){
+
+        output += glyphMap[chunk] || chunk;
+
+    }
+
+    return output;
+
+}
+
+// English input
+
+    englishInput.addEventListener("input",()=>{
+
+        let chunks =
+            englishToChunks(
+                englishInput.value
+            )
+            .split(" ");
+
+
+        englishOutput.textContent =
+            renderCalvinese(chunks);
+
+    });
+
+// Romanized input
+
+    romanInput.addEventListener("input",()=>{
+
+        let chunks =
+            romanToChunks(
+                romanInput.value
+            );
+
+
+        romanOutput.textContent =
+            renderCalvinese(chunks);
+
+    });
+
     });             
+
 </script>
 </div>
 
