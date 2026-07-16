@@ -794,68 +794,90 @@ function romanToScript(text){
 
     text=text.toLowerCase();
 
-    let parsed=[];
-    let i=0;
+    // Expand apostrophe rule:
+    // ti'tsti -> titsti
+    let expanded="";
 
-    while(i<text.length){
-
-        if(/\s/.test(text[i])){
-
-            parsed.push(text[i]);
-            i++;
-            continue;
-
-        }
+    for(let i=0;i<text.length;i++){
 
         if(text[i]==="'"){
 
-            if(parsed.length>0){
-
-                parsed.push(parsed[parsed.length-1]);
-
+            if(i>0){
+                expanded+=text[i-1];
             }
 
+        }
+        else{
+
+            expanded+=text[i];
+
+        }
+
+    }
+
+
+    // Parse chunks and apply " repeat rule
+    let parsed=[];
+    let i=0;
+
+    while(i<expanded.length){
+
+        if(/\s/.test(expanded[i])){
+
+            parsed.push(expanded[i]);
             i++;
             continue;
+
         }
 
         let found=false;
 
         for(const chunk of chunks){
 
-            if(text.substring(i,i+chunk.length)===chunk){
+            if(expanded.substring(i,i+chunk.length)===chunk){
 
                 parsed.push(chunk);
                 i+=chunk.length;
                 found=true;
                 break;
+
             }
+
         }
 
         if(!found){
 
-            parsed.push(text[i]);
+            parsed.push(expanded[i]);
             i++;
 
         }
 
     }
 
-    let output=[];
-    for(const part of parsed){
+
+    let output="";
+
+    for(let j=0;j<parsed.length;j++){
+
         if(
-            part.length>1 &&
-            output.length &&
-            output[output.length-1]===part
+            j>0 &&
+            parsed[j]===parsed[j-1] &&
+            parsed[j].length>1
         ){
-            output[output.length-1]='"';
+
+            output+='"';
+
         }
         else{
-            output.push(part);
+
+            output+=parsed[j];
+
         }
+
     }
 
-    return output.join("");
+    return output;
+
 }
 
 // ----------------------
