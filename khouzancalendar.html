@@ -2,7 +2,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>History of the Kouz Islands</title>
+<title>Khouzan calendar</title>
 
 <style>
 /* Page spacing */
@@ -182,4 +182,1094 @@ html {
     header.textContent = header.textContent.replace("[show]", "[hide]");
   }
 } 
+</script>
+
+    .calendar-wrapper {
+        width: 360px;
+        margin: 0 auto;
+    }
+
+    .calendar {
+        width: 360px;
+        height: 430px;
+        background: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+    }
+
+    .calendar-header {
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .month-title {
+        flex: 1;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .nav-button {
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .nav-button:hover {
+        background: #eeeeee;
+    }
+
+    .weekdays {
+        height: 38px;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        align-items: center;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        color: #777777;
+    }
+
+    .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-auto-rows: 43px;
+        padding: 4px 8px;
+    }
+
+    .day {
+        width: 36px;
+        height: 36px;
+        margin: auto;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .day:hover {
+        background: #eeeeee;
+    }
+
+    .day.today {
+        border: 2px solid #222222;
+    }
+
+    .day.selected {
+        background: #222222;
+        color: #ffffff;
+    }
+
+    .day.empty {
+        pointer-events: none;
+    }
+
+    .result {
+        min-height: 65px;
+        margin-top: 15px;
+        padding: 15px;
+        background: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .result-label {
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: #777777;
+    }
+
+    .result-date {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .flip-button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+        background: #ffffff;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .flip-button:hover {
+        background: #eeeeee;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     HTML
+     ========================================================= -->
+
+<div class="calendar-wrapper">
+
+    <div class="calendar">
+
+        <div class="calendar-header">
+
+            <button
+                class="nav-button"
+                id="previousMonth"
+                aria-label="Previous month"
+            >
+                &#8249;
+            </button>
+
+            <div
+                class="month-title"
+                id="monthTitle"
+            ></div>
+
+            <button
+                class="nav-button"
+                id="nextMonth"
+                aria-label="Next month"
+            >
+                &#8250;
+            </button>
+
+        </div>
+
+        <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+
+        <div
+            class="days"
+            id="calendarDays"
+        ></div>
+
+    </div>
+
+    <div class="result">
+
+        <div
+            class="result-label"
+            id="resultLabel"
+        >
+            Your calendar date
+        </div>
+
+        <div
+            class="result-date"
+            id="resultDate"
+        >
+            Select a day
+        </div>
+
+    </div>
+
+    <button
+        class="flip-button"
+        id="flipButton"
+    >
+        Show Your Calendar
+    </button>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+
+/* =========================================================
+   1. YOUR CALENDAR DEFINITION
+   ========================================================= */
+
+const customMonths = [
+
+    {
+        name: "siahpiare",
+        days: 73
+    },
+
+    {
+        name: "ahpiar",
+        days: 73
+    },
+
+    {
+        name: "eliou",
+        days: 73
+    },
+
+    {
+        name: "tsipeti",
+        days: 73
+    },
+
+    {
+        name: "di'si'",
+        days: 73
+    },
+
+    {
+        name: "ilctiareh",
+        days: 1
+    }
+
+];
+
+
+/* =========================================================
+   2. CALENDAR STATE
+   ========================================================= */
+
+let showingCustom = false;
+
+let displayedDate = new Date();
+
+let selectedDate = new Date();
+
+
+/* =========================================================
+   3. DOM ELEMENTS
+   ========================================================= */
+
+const monthTitle =
+    document.getElementById("monthTitle");
+
+const calendarDays =
+    document.getElementById("calendarDays");
+
+const previousMonth =
+    document.getElementById("previousMonth");
+
+const nextMonth =
+    document.getElementById("nextMonth");
+
+const flipButton =
+    document.getElementById("flipButton");
+
+const resultLabel =
+    document.getElementById("resultLabel");
+
+const resultDate =
+    document.getElementById("resultDate");
+
+
+/* =========================================================
+   4. GENERAL DATE FUNCTIONS
+   ========================================================= */
+
+function isLeapYear(year) {
+
+    return (
+        year % 4 === 0 &&
+        (
+            year % 100 !== 0 ||
+            year % 400 === 0
+        )
+    );
+
+}
+
+
+function sameDate(date1, date2) {
+
+    return (
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate()
+    );
+
+}
+
+
+function getDayOfYear(date) {
+
+    const startOfYear = new Date(
+        date.getFullYear(),
+        0,
+        1
+    );
+
+    const difference =
+        date.getTime() -
+        startOfYear.getTime();
+
+    return (
+        Math.floor(
+            difference / 86400000
+        ) + 1
+    );
+
+}
+
+
+/* =========================================================
+   5. GREGORIAN → CUSTOM CALENDAR
+   ========================================================= */
+
+function gregorianToCustom(date) {
+
+    const year =
+        date.getFullYear();
+
+    const dayOfYear =
+        getDayOfYear(date);
+
+    let remainingDays =
+        dayOfYear;
+
+    for (
+        let i = 0;
+        i < customMonths.length;
+        i++
+    ) {
+
+        const month =
+            customMonths[i];
+
+        /*
+         * ilctiareh only exists
+         * during leap years.
+         */
+
+        if (
+            month.name === "ilctiareh" &&
+            !isLeapYear(year)
+        ) {
+
+            continue;
+
+        }
+
+        if (
+            remainingDays <= month.days
+        ) {
+
+            return {
+
+                year: year,
+
+                month: month.name,
+
+                monthIndex: i,
+
+                day: remainingDays
+
+            };
+
+        }
+
+        remainingDays -= month.days;
+
+    }
+
+}
+
+
+/* =========================================================
+   6. CUSTOM CALENDAR → GREGORIAN
+   ========================================================= */
+
+function customToGregorian(
+    year,
+    monthIndex,
+    day
+) {
+
+    let dayOfYear =
+        day;
+
+    for (
+        let i = 0;
+        i < monthIndex;
+        i++
+    ) {
+
+        const month =
+            customMonths[i];
+
+        /*
+         * ilctiareh does not exist
+         * during non-leap years.
+         */
+
+        if (
+            month.name === "ilctiareh" &&
+            !isLeapYear(year)
+        ) {
+
+            continue;
+
+        }
+
+        dayOfYear +=
+            month.days;
+
+    }
+
+    const date =
+        new Date(
+            year,
+            0,
+            1
+        );
+
+    date.setDate(
+        dayOfYear
+    );
+
+    return date;
+
+}
+
+
+/* =========================================================
+   7. GET CURRENT CUSTOM DATE
+   ========================================================= */
+
+function getCurrentCustomDate() {
+
+    return gregorianToCustom(
+        displayedDate
+    );
+
+}
+
+
+/* =========================================================
+   8. RENDER GREGORIAN CALENDAR
+   ========================================================= */
+
+function renderGregorian() {
+
+    const year =
+        displayedDate.getFullYear();
+
+    const month =
+        displayedDate.getMonth();
+
+    const monthName =
+        displayedDate.toLocaleString(
+            "default",
+            {
+                month: "long"
+            }
+        );
+
+    monthTitle.textContent =
+        monthName + " " + year;
+
+    calendarDays.innerHTML = "";
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+    const numberOfDays =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    /*
+     * Empty cells before
+     * the first day.
+     */
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "day empty";
+
+        calendarDays.appendChild(
+            empty
+        );
+
+    }
+
+
+    /*
+     * Create Gregorian days.
+     */
+
+    for (
+        let day = 1;
+        day <= numberOfDays;
+        day++
+    ) {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "day";
+
+        button.textContent =
+            day;
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+
+        /*
+         * Highlight today.
+         */
+
+        if (
+            sameDate(
+                date,
+                new Date()
+            )
+        ) {
+
+            button.classList.add(
+                "today"
+            );
+
+        }
+
+
+        /*
+         * Highlight selected date.
+         */
+
+        if (
+            sameDate(
+                date,
+                selectedDate
+            )
+        ) {
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        /*
+         * Display custom date
+         * when a day is clicked.
+         */
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                selectedDate =
+                    date;
+
+                const customDate =
+                    gregorianToCustom(
+                        date
+                    );
+
+                resultLabel.textContent =
+                    "Your calendar date";
+
+                resultDate.textContent =
+                    customDate.month +
+                    " " +
+                    customDate.day +
+                    ", " +
+                    customDate.year;
+
+                renderCalendar();
+
+            }
+        );
+
+
+        calendarDays.appendChild(
+            button
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   9. RENDER CUSTOM CALENDAR
+   ========================================================= */
+
+function renderCustom() {
+
+    const customDate =
+        getCurrentCustomDate();
+
+    const year =
+        customDate.year;
+
+    const monthIndex =
+        customDate.monthIndex;
+
+    const currentMonth =
+        customMonths[
+            monthIndex
+        ];
+
+
+    /*
+     * Calendar title.
+     */
+
+    monthTitle.textContent =
+        currentMonth.name +
+        " " +
+        year;
+
+
+    /*
+     * Clear previous days.
+     */
+
+    calendarDays.innerHTML = "";
+
+
+    /*
+     * Find weekday of custom
+     * calendar day 1.
+     */
+
+    const firstGregorianDate =
+        customToGregorian(
+            year,
+            monthIndex,
+            1
+        );
+
+    const firstDay =
+        firstGregorianDate.getDay();
+
+
+    /*
+     * Empty cells before day 1.
+     */
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "day empty";
+
+        calendarDays.appendChild(
+            empty
+        );
+
+    }
+
+
+    /*
+     * Create custom days.
+     */
+
+    for (
+        let day = 1;
+        day <= currentMonth.days;
+        day++
+    ) {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "day";
+
+        button.textContent =
+            day;
+
+
+        /*
+         * Convert custom date
+         * to Gregorian date.
+         */
+
+        const gregorianDate =
+            customToGregorian(
+                year,
+                monthIndex,
+                day
+            );
+
+
+        /*
+         * Highlight today.
+         */
+
+        if (
+            sameDate(
+                gregorianDate,
+                new Date()
+            )
+        ) {
+
+            button.classList.add(
+                "today"
+            );
+
+        }
+
+
+        /*
+         * Highlight selected date.
+         */
+
+        if (
+            sameDate(
+                gregorianDate,
+                selectedDate
+            )
+        ) {
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        /*
+         * Display Gregorian date
+         * when custom day is clicked.
+         */
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                selectedDate =
+                    gregorianDate;
+
+                resultLabel.textContent =
+                    "Gregorian date";
+
+                resultDate.textContent =
+                    gregorianDate.toLocaleDateString(
+                        "default",
+                        {
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric"
+                        }
+                    );
+
+                renderCalendar();
+
+            }
+        );
+
+
+        calendarDays.appendChild(
+            button
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   10. MAIN RENDER FUNCTION
+   ========================================================= */
+
+function renderCalendar() {
+
+    if (showingCustom) {
+
+        renderCustom();
+
+    } else {
+
+        renderGregorian();
+
+    }
+
+}
+
+
+/* =========================================================
+   11. PREVIOUS MONTH
+   ========================================================= */
+
+previousMonth.addEventListener(
+    "click",
+    function() {
+
+        /*
+         * Gregorian mode.
+         */
+
+        if (!showingCustom) {
+
+            displayedDate.setMonth(
+                displayedDate.getMonth() - 1
+            );
+
+            renderCalendar();
+
+            return;
+
+        }
+
+
+        /*
+         * Custom calendar mode.
+         */
+
+        const current =
+            getCurrentCustomDate();
+
+        let previousIndex =
+            current.monthIndex - 1;
+
+
+        /*
+         * Going backward from
+         * siahpiare enters previous year.
+         */
+
+        if (
+            previousIndex < 0
+        ) {
+
+            displayedDate =
+                new Date(
+                    current.year - 1,
+                    11,
+                    31
+                );
+
+            renderCalendar();
+
+            return;
+
+        }
+
+
+        /*
+         * Skip ilctiareh during
+         * non-leap years.
+         */
+
+        if (
+            customMonths[
+                previousIndex
+            ].name === "ilctiareh" &&
+            !isLeapYear(
+                current.year
+            )
+        ) {
+
+            previousIndex--;
+
+        }
+
+
+        displayedDate =
+            customToGregorian(
+                current.year,
+                previousIndex,
+                1
+            );
+
+        renderCalendar();
+
+    }
+);
+
+
+/* =========================================================
+   12. NEXT MONTH
+   ========================================================= */
+
+nextMonth.addEventListener(
+    "click",
+    function() {
+
+        /*
+         * Gregorian mode.
+         */
+
+        if (!showingCustom) {
+
+            displayedDate.setMonth(
+                displayedDate.getMonth() + 1
+            );
+
+            renderCalendar();
+
+            return;
+
+        }
+
+
+        /*
+         * Custom calendar mode.
+         */
+
+        const current =
+            getCurrentCustomDate();
+
+        let nextIndex =
+            current.monthIndex + 1;
+
+
+        /*
+         * Skip ilctiareh during
+         * non-leap years.
+         */
+
+        if (
+            nextIndex <
+                customMonths.length &&
+            customMonths[
+                nextIndex
+            ].name === "ilctiareh" &&
+            !isLeapYear(
+                current.year
+            )
+        ) {
+
+            nextIndex++;
+
+        }
+
+
+        /*
+         * Going forward from the
+         * final month enters next year.
+         */
+
+        if (
+            nextIndex >=
+                customMonths.length
+        ) {
+
+            displayedDate =
+                new Date(
+                    current.year + 1,
+                    0,
+                    1
+                );
+
+            renderCalendar();
+
+            return;
+
+        }
+
+
+        displayedDate =
+            customToGregorian(
+                current.year,
+                nextIndex,
+                1
+            );
+
+        renderCalendar();
+
+    }
+);
+
+
+/* =========================================================
+   13. FLIP CALENDAR
+   ========================================================= */
+
+flipButton.addEventListener(
+    "click",
+    function() {
+
+        showingCustom =
+            !showingCustom;
+
+
+        /*
+         * Keep the same actual date
+         * when switching calendars.
+         */
+
+        displayedDate =
+            new Date(
+                selectedDate
+            );
+
+
+        /*
+         * Update button text.
+         */
+
+        if (showingCustom) {
+
+            flipButton.textContent =
+                "Show Gregorian Calendar";
+
+        } else {
+
+            flipButton.textContent =
+                "Show Your Calendar";
+
+        }
+
+
+        renderCalendar();
+
+    }
+);
+
+
+/* =========================================================
+   14. INITIALIZE
+   ========================================================= */
+
+renderCalendar();
+
+
 </script>
