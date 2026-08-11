@@ -141,49 +141,17 @@ html {
   margin: 5px 0;
 }
 
-</style>
+* {
+        box-sizing: border-box;
+    }
 
-<!-- TOC -->
-<div class="main">
-	<div class="toc">
-	  <h1>Khouzan calendar</h1>
-	  <div class="history-figure">
-		<img src="images/cvmap.png" alt="History image" >
-		<figcaption>Map of the Kouz Islands</figcaption>
-	  </div>
-
-	  <div class="section">
-		<div class="header" onclick="toggle(this)">Contents [show]</div>
-		<div class="content">
-		  <ol>
-			 <li><a href="#anchor1">Early History and Berber Period</a></li>
-			<li><a href="#anchor2">Middle Age European Encounters</a></li>
-			<li><a href="#anchor3">Early Modern XXX</a></li>
-			<li><a href="#anchor4">The Long 19th Century</a></li>
-			<li><a href="#anchor5">World War I, the inter-war period, and World War II</a></li>
-			<li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
-		  </ol>
-		</div>
-	  </div>
-	</div>
-</div>
-
-<script>
-	 function toggle(header) {
-  const content = header.nextElementSibling;
-
-  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-    // Currently open → close it
-    content.style.maxHeight = "0px";
-    header.textContent = header.textContent.replace("[hide]", "[show]");
-  } else {
-    // Currently closed → open it
-    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
-    header.textContent = header.textContent.replace("[show]", "[hide]");
-  }
-} 
-</script>
-
+    body {
+        margin: 0;
+        padding: 30px;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #222;
+    }
     .calendar-wrapper {
         width: 360px;
         margin: 0 auto;
@@ -313,7 +281,49 @@ html {
 
 </style>
 
-</head>
+<!-- TOC -->
+<div class="main">
+	<div class="toc">
+	  <h1>Khouzan calendar</h1>
+	  <div class="history-figure">
+		<img src="images/cvmap.png" alt="History image" >
+		<figcaption>Map of the Kouz Islands</figcaption>
+	  </div>
+
+	  <div class="section">
+		<div class="header" onclick="toggle(this)">Contents [show]</div>
+		<div class="content">
+		  <ol>
+			 <li><a href="#anchor1">Early History and Berber Period</a></li>
+			<li><a href="#anchor2">Middle Age European Encounters</a></li>
+			<li><a href="#anchor3">Early Modern XXX</a></li>
+			<li><a href="#anchor4">The Long 19th Century</a></li>
+			<li><a href="#anchor5">World War I, the inter-war period, and World War II</a></li>
+			<li><a href="#anchor6">Return to Isolationism and Third Worldism</a></li>
+		  </ol>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+	 function toggle(header) {
+  const content = header.nextElementSibling;
+
+  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+    // Currently open → close it
+    content.style.maxHeight = "0px";
+    header.textContent = header.textContent.replace("[hide]", "[show]");
+  } else {
+    // Currently closed → open it
+    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
+    header.textContent = header.textContent.replace("[show]", "[hide]");
+  }
+} 
+</script>
+
+
+
 
 <body>
 
