@@ -166,11 +166,7 @@ body {
     padding: 30px;
 
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+        'Courier New', Courier, monospace;
 
     background: #f8f9fa;
 
@@ -1164,7 +1160,6 @@ function getMondayFirstDay(
 
 }
 
-
 /* =========================================================
    7. MONTH TITLE ANIMATION
    ========================================================= */
@@ -1179,7 +1174,7 @@ function setMonthTitle(
 ) {
 
     /*
-     * Stop previous animation.
+     * Stop the previous animation.
      */
 
     clearInterval(
@@ -1188,7 +1183,7 @@ function setMonthTitle(
 
 
     /*
-     * Set romanized name.
+     * Keep the romanized version lowercase.
      */
 
     romanizedMonth.textContent =
@@ -1196,19 +1191,27 @@ function setMonthTitle(
 
 
     /*
-     * Send the SAME romanized spelling
-     * directly to the Calvinese font.
+     * IMPORTANT:
      *
-     * The font's ligatures turn it into
-     * the Calvinese script.
+     * The Calvinese font receives the
+     * letters in ALL CAPS before the
+     * font renders its glyphs/ligatures.
+     *
+     * Example:
+     *
+     * siahpiare
+     *
+     * becomes:
+     *
+     * SIAHPIARE
      */
 
     scriptMonth.textContent =
-        romanizedName;
+        romanizedName.toUpperCase();
 
 
     /*
-     * Set year.
+     * Set the year.
      */
 
     monthYear.textContent =
@@ -1216,7 +1219,7 @@ function setMonthTitle(
 
 
     /*
-     * Start with romanization.
+     * Start with the romanized name.
      */
 
     monthTitle.classList.remove(
@@ -1224,13 +1227,14 @@ function setMonthTitle(
     );
 
 
-    /*
-     * Alternate between the two.
-     */
-
     let showingScript =
         false;
 
+
+    /*
+     * Alternate between romanized
+     * and Calvinese script.
+     */
 
     monthAnimationTimer =
         setInterval(
