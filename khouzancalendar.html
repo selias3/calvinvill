@@ -240,7 +240,7 @@ body {
 
     grid-template-columns:
         38px
-        1fr
+        minmax(0, 1fr)
         38px;
 
     align-items: center;
@@ -255,12 +255,10 @@ body {
 
 
 /* =========================================================
-   ANIMATED MONTH TITLE
+   MONTH TITLE
    ========================================================= */
 
 .month-title {
-
-    position: relative;
 
     display: flex;
 
@@ -279,41 +277,71 @@ body {
 }
 
 
-/*
- * Both month-name elements occupy
- * the same location.
- */
+/* =========================================================
+   MONTH NAME CONTAINER
+   ========================================================= */
+
+.month-name-container {
+
+    position: relative;
+
+    display: inline-block;
+
+    /*
+     * The two versions occupy the same
+     * horizontal space.
+     */
+
+    min-width: 80px;
+
+    height: 28px;
+
+}
+
+
+/* =========================================================
+   MONTH NAME ANIMATION
+   ========================================================= */
 
 .month-name {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
 
     transition:
         opacity 0.6s ease,
         transform 0.6s ease;
 
+    white-space: nowrap;
+
 }
 
 
-/*
- * Romanized month.
- */
+/* =========================================================
+   ROMANIZED VERSION
+   ========================================================= */
 
 .month-name.romanized {
 
     opacity: 1;
 
     transform:
-        translateY(0);
+        translate(-50%, -50%);
 
 }
 
 
-/*
- * Calvinese script month.
- */
+/* =========================================================
+   CALVINESE SCRIPT VERSION
+   ========================================================= */
 
 .month-name.script {
-
-    position: absolute;
 
     font-family:
         "Calvinese",
@@ -322,15 +350,14 @@ body {
     opacity: 0;
 
     transform:
-        translateY(8px);
+        translate(-50%, calc(-50% + 8px));
 
 }
 
 
-/*
- * Romanized name disappears
- * when script mode is active.
- */
+/* =========================================================
+   SCRIPT ACTIVE
+   ========================================================= */
 
 .month-title.script-active
 .month-name.romanized {
@@ -338,15 +365,10 @@ body {
     opacity: 0;
 
     transform:
-        translateY(-8px);
+        translate(-50%, calc(-50% - 8px));
 
 }
 
-
-/*
- * Script name appears
- * when script mode is active.
- */
 
 .month-title.script-active
 .month-name.script {
@@ -354,18 +376,20 @@ body {
     opacity: 1;
 
     transform:
-        translateY(0);
+        translate(-50%, -50%);
 
 }
 
 
-/*
- * Year stays stationary.
- */
+/* =========================================================
+   YEAR
+   ========================================================= */
 
 .month-year {
 
-    margin-left: 5px;
+    margin-left: 8px;
+
+    flex-shrink: 0;
 
 }
 
@@ -737,41 +761,26 @@ body {
                  MONTH TITLE
                  ============================================= -->
 
-            <div class="month-title">
+            <span class="month-name-container">
 
+        <span
+            class="month-name romanized"
+            id="romanizedMonth"
+        ></span>
 
-                <span
-                    class="month-name romanized"
-                    id="romanizedMonth"
-                ></span>
+        <span
+            class="month-name script"
+            id="scriptMonth"
+        ></span>
 
+    </span>
 
-                <span
-                    class="month-name script"
-                    id="scriptMonth"
-                ></span>
+    <span
+        class="month-year"
+        id="monthYear"
+    ></span>
 
-
-                <span
-                    class="month-year"
-                    id="monthYear"
-                ></span>
-
-
-            </div>
-
-
-            <button
-                class="nav-button"
-                id="nextMonth"
-                aria-label="Next month"
-            >
-                &#8250;
-            </button>
-
-
-        </div>
-
+</div>
 
         <!-- =================================================
              CALVINESE WEEKDAYS
