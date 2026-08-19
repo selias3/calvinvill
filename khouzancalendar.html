@@ -1762,6 +1762,29 @@ function renderCalendar() {
 
 }
 
+/* =========================================================
+   KHOUZAN MONTH NAVIGATION
+   ========================================================= */
+
+function getKhouzanMonthCount(
+    gregorianYear
+) {
+
+    if (
+        isLeapYear(
+            gregorianYear
+        )
+    ) {
+
+        return 6;
+
+    }
+
+
+    return 5;
+
+}
+
 
 /* =========================================================
    PREVIOUS KHOUZAN MONTH
@@ -1775,44 +1798,28 @@ function previousKhouzanMonth() {
         );
 
 
-    let newMonth =
+    let newMonthIndex =
         current.monthIndex - 1;
 
 
-    let newYear =
+    let newGregorianYear =
         current.gregorianYear;
 
 
-    /*
-     * Move to the previous year.
-     */
-
     if (
-        newMonth < 0
+        newMonthIndex < 0
     ) {
 
-        newYear--;
+        newGregorianYear--;
 
 
-        /*
-         * Leap years have ilctiareh.
-         */
+        newMonthIndex =
 
-        if (
-            isLeapYear(
-                newYear
+            getKhouzanMonthCount(
+                newGregorianYear
             )
-        ) {
 
-            newMonth = 5;
-
-        }
-
-        else {
-
-            newMonth = 4;
-
-        }
+            - 1;
 
     }
 
@@ -1820,9 +1827,9 @@ function previousKhouzanMonth() {
     displayedDate =
         khouzanToGregorian(
 
-            newYear,
+            newGregorianYear,
 
-            newMonth,
+            newMonthIndex,
 
             1
 
@@ -1843,52 +1850,29 @@ function nextKhouzanMonth() {
         );
 
 
-    let newMonth =
+    let newMonthIndex =
         current.monthIndex + 1;
 
 
-    let newYear =
+    let newGregorianYear =
         current.gregorianYear;
 
 
-    /*
-     * Skip ilctiareh
-     * in non-leap years.
-     */
-
     if (
 
-        newMonth === 5
+        newMonthIndex >=
 
-        &&
-
-        !isLeapYear(
-            newYear
+        getKhouzanMonthCount(
+            newGregorianYear
         )
 
     ) {
 
-        newMonth = 0;
-
-        newYear++;
-
-    }
+        newMonthIndex =
+            0;
 
 
-    /*
-     * Move from ilctiareh
-     * to the next year.
-     */
-
-    else if (
-
-        newMonth > 5
-
-    ) {
-
-        newMonth = 0;
-
-        newYear++;
+        newGregorianYear++;
 
     }
 
@@ -1896,9 +1880,9 @@ function nextKhouzanMonth() {
     displayedDate =
         khouzanToGregorian(
 
-            newYear,
+            newGregorianYear,
 
-            newMonth,
+            newMonthIndex,
 
             1
 
