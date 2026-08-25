@@ -112,14 +112,13 @@ html {
 	padding: 5px;
 } 
 	
-	
-
-/* Accordion section */
-.section {
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  float: left;
-  width: 200px;
+/* contents */
+.contents { 
+	border: 1px solid #ccc;
+	float: left;
+	width: 200px;
+	margin-bottom: 10px;
+	margin-right: 10px;
 }
 
 .header {
@@ -157,25 +156,8 @@ html {
 	</div>
 </div>
 
-<script>
-	 function toggle(header) {
-  const content = header.nextElementSibling;
-
-  if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-    // Currently open → close it
-    content.style.maxHeight = "0px";
-    header.textContent = header.textContent.replace("[hide]", "[show]");
-  } else {
-    // Currently closed → open it
-    content.style.maxHeight = content.scrollHeight + "px"; // dynamic height
-    header.textContent = header.textContent.replace("[show]", "[hide]");
-  }
-} 
-</script>
-
-<div class="main">
-	<div class="section">
-		<div class="header" onclick="toggle(this)">Contents [show]</div>
+<div class="contents">
+		<div class="header">Contents</div>
 		<div class="content">
 		  <ol>
 			 <li><a href="#anchor1">Early History and Berber Period</a></li>
