@@ -15,22 +15,8 @@ body {
 html {
   scroll-behavior: smooth;
 } 
-</style>
-</head>
 
-<!-- Header -->
-
-<h1 style="text-align:center;">
-  <a href="index.html">
-    <img src="images/emblem2.png" height="125" width="125" alt="Emblem">
-  </a>
-</h1>
-<h2 style="font-family:Georgia; background-color:#D1C4E9;">Name of person here</h2>
-
-<body>
-<style>
 /* Page spacing */
-
 .main { 
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -55,89 +41,113 @@ html {
   margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 20px;
   border: 1px solid #ccc;
   background: #ffffff;
   padding: 10px;
   box-sizing: border-box;
 }
-
-.box h1 {
-  background-color: #eee;
+/* h2 should only be used when implementing a background color*/
+.box h2 { 
+  background-color: #aba6eb;
   text-align: center;
   font-size: 14px;
-  padding: 10px;
 } 
-
+  
 .subcatergories { 
 	padding: 20px;
 	font-size: 12px;
 	margin-right: 20px;
 }
-  
-/* Figure styling */
-.person { 
-  margin: 10px 0;
-}
 
-.person img {
+/* Figure styling */
+.box img {
   display: block;
   max-width: 100%;
-	margin: 0 auto;
+  border: 1px solid #ccc;
 }
 
-.person figcaption {
+.box figcaption {
   font-size: 12px;
   text-align: center;
   margin-top: 5px;
 }
 
 /* in text images*/ 
-.person-text { 
+.text { 
 	background-color: #ffffff;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
-	margin: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 } 
 
-.person-text img { 
+.text img { 
 	display: block;
 	max-width: 100%;
-	padding: 2px;
+	padding: 5px;
 } 
 
-.person-text figcaption { 
+.text figcaption { 
 	font-size: 12px;
 	font-family: Arial;
 	font-style: italic;
 	padding: 5px;
 } 
 	
-/* Accordion section */
-.section {
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
+/* contents */
+.contents { 
+	border: 1px solid #ccc;
+	float: left;
+	width: 200px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	background-color: #ffffff;
+	font-size: 10px;
 }
 
-.header {
-  background: #eee;
-  padding: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  padding-left: 5px;
-  font-size: 12px;
-}
-
-.content ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 5px 0;
+.contents h3 {
+	background-color: #ccc;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
 }
 </style>
+
+<!-- Header -->
+<h1 style="text-align:center;">
+  <a href="index.html">
+    <img src="images/emblem2.png" height="125" width="125" alt="Emblem">
+  </a>
+</h1>
+<h2 style="font-family:Georgia; background-color:#D1C4E9;">Person Template</h2>
+
+<!--infobox-->
+<div class="box">
+	  <h1>History of the Kouz Islands</h1>
+	  <div class="history-figure">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Premier_Chou_En-Lai_in_the_Great_Hall_of_the_People%27s_Banquet_Hall_-_DPLA_-_a40021a8100507bc7a244420481bf488.jpg/250px-Premier_Chou_En-Lai_in_the_Great_Hall_of_the_People%27s_Banquet_Hall_-_DPLA_-_a40021a8100507bc7a244420481bf488.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="History image" >
+		<figcaption>Map of the Kouz Islands</figcaption>
+	  </div>
+      <h2>Personal details </h2>
+      <table class="subcatergories">
+		<tr>
+			<td><b>Born</b></td>
+			<td>
+                <div>May 1 2000</div>
+                <div>47 ahpiar 6334</div>
+                <div>Astoria, Gatwick Province, Calvinvill</div>
+            </td>
+		</tr>
+		<tr>
+			<td><b>Direction</b></td>
+			<td>Left to right</td>
+		</tr>
+		<tr>
+			<td><b>Founded</b></td>
+			<td>2010 (6344)</td>
+		</tr>
+		<tr>
+			<td><b>No. of teams</b></td>
+			<td>10</td>
+		</tr>
+	</div>
