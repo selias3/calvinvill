@@ -32,7 +32,6 @@ html {
 <body>
 <style>
 /* Page spacing */
-
 .main { 
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -51,7 +50,7 @@ html {
 } 
 
 /* Infobox */
-.toc {
+.box {
   width: 300px;
   float: right;
   margin-left: 10px;
@@ -63,14 +62,18 @@ html {
   box-sizing: border-box;
 }
 
-.toc h1 {
-  background-color: #eee;
+.box h1 {
+  background-color: #EEEEEE;
   text-align: center;
   font-size: 14px;
-  padding: 10px;
 } 
   
-  
+.subcatergories { 
+	padding: 20px;
+	font-size: 12px;
+	margin-right: 20px;
+}
+
 /* Figure styling */
 .history-figure { 
   margin: 10px 0;
@@ -79,6 +82,7 @@ html {
 .history-figure img {
   display: block;
   max-width: 100%;
+  border: 1px solid #ccc;
 }
 
 .history-figure figcaption {
@@ -86,8 +90,6 @@ html {
   text-align: center;
   margin-top: 5px;
 }
-
-
 
 /* in text images*/ 
 .history-figure-text { 
@@ -112,7 +114,6 @@ html {
 } 
 	
 /* contents */
-
 h3 {
 	background-color: #ccc;
 	font-weight: bold;
@@ -133,15 +134,14 @@ h3 {
 </style>
 
 <!-- TOC -->
-<div class="main">
-	<div class="toc">
+	<div class="box">
 	  <h1>History of the Kouz Islands</h1>
 	  <div class="history-figure">
 		<img src="images/cvmap.png" alt="History image" >
 		<figcaption>Map of the Kouz Islands</figcaption>
 	  </div>
 	</div>
-</div>
+
 
 <div class="main">
 	<div class="contents">
